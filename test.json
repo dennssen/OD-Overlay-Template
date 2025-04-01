@@ -1,0 +1,38 @@
+{
+    "customData": {
+        "statsInfo": {
+            "away": {},
+            "home": {}
+        },
+        "arenaInfo": {
+            "home": {
+                "score": 3,
+                "players": [
+                    "player1",
+                    "player2",
+                    "player3"
+                ],
+                "color": {
+                    "r": "1",
+                    "g": "0",
+                    "b": "0"
+                }
+            },
+            "away": {
+                "score": 2,
+                "players": [
+                    "player4",
+                    "player5",
+                    "player6"
+                ],
+                "color": {
+                    "r": "0",
+                    "g": "0",
+                    "b": "1"
+                }
+            },
+            "followedPlayer": "player4",
+            "startTime": "14:30:05"
+        }
+    }
+}
