@@ -1,13 +1,13 @@
-body{
+body {
     margin: 0;
     overflow: hidden;
 }
 
-.game-container{
-    display: none;
+.game-container {
+    display: block;
     position: fixed;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
 
     width: 100%;
     height: 100%;
@@ -15,7 +15,7 @@ body{
     padding-bottom: 10px;
 }
 
-#top-bar{
+#top-bar {
     position: relative;
     width: 100%;
     height: 20%;
@@ -25,14 +25,7 @@ body{
     justify-content: center;
 }
 
-#team1-players{
-    height: 100%;
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: max-content;
-    justify-content: center;
-}
-#team2-players{
+#team1-players {
     height: 100%;
     flex-grow: 1;
     display: grid;
@@ -40,7 +33,15 @@ body{
     justify-content: center;
 }
 
-#team1-players div{
+#team2-players {
+    height: 100%;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: max-content;
+    justify-content: center;
+}
+
+#team1-players div {
     background-color: red;
     color: black;
     display: grid;
@@ -51,7 +52,7 @@ body{
     border-radius: 10px;
 }
 
-#team2-players div{
+#team2-players div {
     background-color: blue;
     color: black;
     display: grid;
@@ -62,14 +63,14 @@ body{
     border-radius: 10px;
 }
 
-.player-name p{
+.player-name p {
     font-size: 1.3em;
     padding-left: 25px;
     padding-right: 25px;
     margin: auto;
 }
 
-#game-bar{
+#game-bar {
     height: 80%;
     flex-grow: 5;
     border: 3px solid;
@@ -81,7 +82,7 @@ body{
     flex-direction: row;
 }
 
-#game-info{
+#game-info {
     color: white;
     flex-grow: 2;
     display: flex;
@@ -92,32 +93,38 @@ body{
     align-items: center;
 }
 
-#game-time{
+#game-time {
     flex-grow: 0.5;
     padding-top: 2px;
     font-size: 1.4em;
 }
 
-#game-score{
+#game-score {
     flex-grow: 2;
     width: 80%;
     display: flex;
     flex-direction: row;
 }
 
-.team-score{
+#team1-score {
     flex-grow: 4;
     font-size: 2.5em;
     text-align: center;
 }
 
-#score-seperator{
+#team2-score {
+    flex-grow: 4;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+#score-seperator {
     flex-grow: 1;
     font-size: 2.5em;
     text-align: center;
 }
 
-.team-info{
+.team-info {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
@@ -125,12 +132,12 @@ body{
     padding-right: 10px;
 }
 
-.team-info img{
+.team-info img {
     max-width: 256px;
     aspect-ratio: 1;
 }
 
-.team-info p{
+.team-info p {
     align-items: center;
     width: fit-content;
     font-size: 2em;
@@ -199,6 +206,6 @@ body{
     margin-left: 10px;
 }
 
-.stats p{
+.stats p {
     margin: 10px 0;
 }
