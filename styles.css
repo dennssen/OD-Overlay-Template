@@ -1,3 +1,8 @@
+:root{
+    --home-color: rgb(255, 0, 0);
+    --away-color: rgb(0, 0, 255);
+}
+
 body {
     margin: 0;
     overflow: hidden;
@@ -42,7 +47,7 @@ body {
 }
 
 #team1-players div {
-    background-color: red;
+    background-color: var(--home-color);
     color: black;
     display: grid;
     align-items: center;
@@ -53,7 +58,7 @@ body {
 }
 
 #team2-players div {
-    background-color: blue;
+    background-color: var(--away-color);
     color: black;
     display: grid;
     align-items: center;
@@ -75,7 +80,7 @@ body {
     flex-grow: 5;
     border: 3px solid;
     border-radius: 20px;
-    background-image: linear-gradient(to right, red, blue);
+    background-image: linear-gradient(to right, var(--home-color), var(--away-color));
     color: black;
 
     display: flex;
@@ -145,10 +150,11 @@ body {
     flex-grow: 2;
 }
 
-.team1-stats-box {
+#team1-stats-box {
+    display: none;
     height: 30%;
     width: 15%;
-    background-color: red;
+    background-color: var(--home-color);
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
@@ -161,10 +167,11 @@ body {
     left: 50px;
 }
 
-.team2-stats-box {
+#team2-stats-box {
+    display: none;
     height: 30%;
     width: 15%;
-    background-color: blue;
+    background-color: var(--away-color);
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
@@ -184,11 +191,18 @@ body {
     margin-bottom: 5px;
 }
 
-.follow-player-name {
+#team1-follow-player-name {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+#team2-follow-player-name {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 
 .divider {
     border-top: 4px solid black;

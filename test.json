@@ -2,7 +2,7 @@
     "script": "dennssen.overlayInfo.luau",
     "customData": {
         "arenaInfo": {
-            "startTime": "22:30:15",
+            "startTime": "11:45:00",
             "away": {
                 "players": [
                     "player1",
@@ -11,9 +11,9 @@
                 ],
                 "score": 1,
                 "color": {
-                    "b": "0.1",
-                    "g": "0.1",
-                    "r": "1"
+                    "b": "0.9",
+                    "g": "0.35",
+                    "r": "0.35"
                 }
             },
             "home": {
@@ -24,26 +24,26 @@
                 ],
                 "score": 2,
                 "color": {
-                    "b": "0.5",
-                    "g": "0.5",
-                    "r": "0"
+                    "b": "0.6",
+                    "g": "0.1",
+                    "r": "0.6"
                 }
             },
-            "followedPlayer": "player3"
+            "followedPlayer": "player1"
         },
         "statsInfo": {
             "home": {
                 "player5": {
                     "goals": 1,
                     "saves": 0,
-                    "asssists": 1
+                    "assists": 1
                 }
             },
             "away": {
                 "player1": {
                     "goals": 1,
                     "saves": 0,
-                    "asssists": 0
+                    "assists": 0
                 }
             }
         }
