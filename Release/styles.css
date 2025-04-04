@@ -1,0 +1,252 @@
+:root {
+    --home-color: rgb(0, 0, 255);
+    --away-color: rgb(255, 0, 0);
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    color: white;
+    font-family: Impact;
+}
+
+.game-container {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+#top-bar {
+    position: relative;
+    width: 100%;
+    height: 23vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#home-players {
+    min-width: 290px;
+    height: fit-content;
+    flex-grow: 1;
+    display: grid;
+}
+
+#away-players {
+    min-width: 290px;
+    height: fit-content;
+    flex-grow: 1;
+    display: grid;
+}
+
+#home-players div {
+    background-image: url(Assets/Svgs/Bluename.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: 1px;
+}
+
+#away-players div {
+    background-image: url(Assets/Svgs/redname.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: 1px;
+}
+
+.player-name p {
+    font-size: 1.3em;
+    padding: 10px 0;
+    margin: auto;
+}
+
+#game-bar {
+    background-image: url(Assets/Svgs/Overlay\ Main.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    flex-grow: 5;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#game-info-container {
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* Distributes children evenly with space between */
+    height: 19vh;
+}
+
+#game-time {
+    flex-grow: 1;
+    /* Allows it to scale proportionally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
+}
+
+#game-score {
+    flex-grow: 2;
+    /* Makes it larger compared to other elements */
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#away-score {
+    width: 40%;
+    color: var(--away-color);
+    flex-grow: 1;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
+    text-align: center;
+}
+
+#home-score {
+    width: 40%;
+    color: var(--home-color);
+    flex-grow: 1;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
+    text-align: center;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    /* Ensures content is vertically aligned */
+    justify-content: center;
+    /* Ensures content is horizontally centered */
+    padding: 10px;
+    width: 20%;
+    /* Set a fixed width for consistency */
+    height: 100%;
+    /* Ensure they take up the full height of the parent container */
+    box-sizing: border-box;
+    /* Includes padding in the width/height calculation */
+}
+
+.team-info img {
+    max-width: 256px;
+    aspect-ratio: 1;
+}
+
+.team-info p {
+    align-items: center;
+    width: fit-content;
+    font-size: 5vh;
+    flex-grow: 2;
+}
+
+#home-stats-box {
+    display: block;
+    height: 25%;
+    width: 10%;
+    background-image: url(Assets/Svgs/BlueSide.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    text-align: center;
+
+    /* Positioning */
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+#away-stats-box {
+    display: block;
+    height: 25%;
+    width: 10%;
+    background-image: url(Assets/Svgs/RedSide.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    text-align: center;
+
+    /* Positioning */
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}
+
+#tourny-info {
+    flex-grow: 1;
+    /* Allows it to scale proportionally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.7vh;
+    /* Scales font size with the viewport width */
+}
+
+#tourny-info p {
+    margin: 0;
+}
+
+.stats-header {
+    font-size: 1.6em;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+#home-follow-player-name {
+    font-size: 3vh;
+    margin-bottom: 5px;
+}
+
+#away-follow-player-name {
+    font-size: 3vh;
+    margin-bottom: 5px;
+}
+
+.divider {
+    border-top: 4px solid black;
+    margin: 5px 0;
+}
+
+.stats-divider {
+    border-top: 2px solid black;
+    margin: 1px 0;
+}
+
+.stats {
+    font-size: 1.8vh;
+    text-align: left;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.stats p {
+    margin: 10px 0;
+}

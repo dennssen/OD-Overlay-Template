@@ -34,7 +34,7 @@ function updateWebiste(data) {
 }
 
 function playerNames(data) {
-    let homePlayersElement = document.getElementById("team1-players")
+    let homePlayersElement = document.getElementById("home-players")
     let homeInnerHtml = ""
     for (let i = 0; i < data.arenaInfo.home.players.length; i++) {
         const playerName = data.arenaInfo.home.players[i];
@@ -42,7 +42,7 @@ function playerNames(data) {
     }
     homePlayersElement.innerHTML = homeInnerHtml
 
-    let awayPlayersElement = document.getElementById("team2-players")
+    let awayPlayersElement = document.getElementById("away-players")
     let awayInnerHtml = ""
     for (let i = 0; i < data.arenaInfo.away.players.length; i++) {
         const playerName = data.arenaInfo.away.players[i];
@@ -52,15 +52,15 @@ function playerNames(data) {
 }
 
 function score(data) {
-    let homeScore = document.getElementById("team1-score")
-    let awayScore = document.getElementById("team2-score")
+    let homeScore = document.getElementById("home-score")
+    let awayScore = document.getElementById("away-score")
     homeScore.innerHTML = data.arenaInfo.home.score
     awayScore.innerHTML = data.arenaInfo.away.score
 }
 
 function setTime(data) {
     const time = data.arenaInfo.startTime;
-    if (time === ""){
+    if (time === "") {
         return;
     }
 
@@ -87,7 +87,7 @@ function color(data) {
     awayColor.g = awayColor.g * 255;
     awayColor.b = awayColor.b * 255;
 
-    document.documentElement.style.setProperty("--away-color", `rgb(${awayColor.r}, ${awayColor.g}, ${awayColor.b})`) ;
+    document.documentElement.style.setProperty("--away-color", `rgb(${awayColor.r}, ${awayColor.g}, ${awayColor.b})`);
 }
 
 function followed(data) {
@@ -100,43 +100,43 @@ function followed(data) {
 
     for (let i = 0; i < homePlayers.length; i++) {
         const playerName = homePlayers[i];
-        if (followedPlayer == playerName){
+        if (followedPlayer == playerName) {
             foundPlayer = true;
             isHome = true;
             break;
         }
     }
 
-    if (!foundPlayer){
+    if (!foundPlayer) {
         for (let i = 0; i < awayPlayers.length; i++) {
             const playerName = awayPlayers[i];
             console.log(playerName)
-            if (followedPlayer == playerName){
+            if (followedPlayer == playerName) {
                 foundPlayer = true;
                 break;
             }
         }
     }
 
-    let homePlayerBox = document.getElementById("team1-stats-box");
-    let awayPlayerBox = document.getElementById("team2-stats-box");
+    let homePlayerBox = document.getElementById("home-stats-box");
+    let awayPlayerBox = document.getElementById("away-stats-box");
 
-    if (!foundPlayer){
+    if (!foundPlayer) {
         homePlayerBox.style.display = "none";
         awayPlayerBox.style.display = "none";
         console.log("no player")
         return;
     }
 
-    if(isHome){
-        let name = document.getElementById("team1-follow-player-name");
-        let goals = document.getElementById("team1-goals");
-        let assists = document.getElementById("team1-assists");
-        let saves = document.getElementById("team1-saves");
+    if (isHome) {
+        let name = document.getElementById("home-follow-player-name");
+        let goals = document.getElementById("home-goals");
+        let assists = document.getElementById("home-assists");
+        let saves = document.getElementById("home-saves");
 
         let stats = data.statsInfo.home[followedPlayer]
         console.log(stats)
-        if (typeof stats == "undefined"){
+        if (typeof stats == "undefined") {
             console.log("here")
             stats = {
                 goals: 0,
@@ -153,15 +153,15 @@ function followed(data) {
         homePlayerBox.style.display = "block";
         awayPlayerBox.style.display = "none";
     }
-    else{
-        let name = document.getElementById("team2-follow-player-name");
-        let goals = document.getElementById("team2-goals");
-        let assists = document.getElementById("team2-assists");
-        let saves = document.getElementById("team2-saves");
+    else {
+        let name = document.getElementById("away-follow-player-name");
+        let goals = document.getElementById("away-goals");
+        let assists = document.getElementById("away-assists");
+        let saves = document.getElementById("away-saves");
 
         let stats = data.statsInfo.away[followedPlayer];
         console.log(stats)
-        if (typeof stats == "undefined"){
+        if (typeof stats == "undefined") {
             console.log("here")
             stats = {
                 goals: 0,
@@ -180,13 +180,13 @@ function followed(data) {
     }
 }
 
-function updateTimer(){
-    if (typeof arenaStartTime == "undefined"){
+function updateTimer() {
+    if (typeof arenaStartTime == "undefined") {
         return;
     }
 
     const now = new Date();
-    if (now >= arenaStartTime){
+    if (now >= arenaStartTime) {
         return;
     }
 
@@ -195,7 +195,7 @@ function updateTimer(){
     const secondsRemaining = diffSeconds % 60;
 
     currentArenaTime = `${String(minutesRemaining).padStart(2, '0')}:${String(secondsRemaining).padStart(2, '0')}`;
-    
+
     const gameTime = document.getElementById("game-time")
     gameTime.innerHTML = currentArenaTime;
 }
