@@ -113,7 +113,7 @@ body {
 #game-score {
     flex-grow: 2;
     /* Makes it larger compared to other elements */
-    width: 40%;
+    width: 75%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -163,20 +163,19 @@ body {
 .team-info p {
     align-items: center;
     width: fit-content;
-    font-size: 4em;
+    font-size: 5vh;
     flex-grow: 2;
 }
 
 #home-stats-box {
-    display: none;
-    height: 30%;
-    width: 15%;
-    background-color: var(--home-color);
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 10px;
+    display: block;
+    height: 25%;
+    width: 10%;
+    background-image: url(Assets/BlueSide.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
     text-align: center;
-    font-family: Arial, sans-serif;
 
     /* Positioning */
     position: fixed;
@@ -185,15 +184,14 @@ body {
 }
 
 #away-stats-box {
-    display: none;
-    height: 30%;
-    width: 15%;
-    background-color: var(--away-color);
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 10px;
+    display: block;
+    height: 25%;
+    width: 10%;
+    background-image: url(Assets/RedSide.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
     text-align: center;
-    font-family: Arial, sans-serif;
 
     /* Positioning */
     position: fixed;
@@ -207,7 +205,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3vh;
+    font-size: 2.7vh;
     /* Scales font size with the viewport width */
 }
 
@@ -218,19 +216,16 @@ body {
 .stats-header {
     font-size: 1.6em;
     text-align: left;
-    font-weight: bold;
     margin-bottom: 5px;
 }
 
 #home-follow-player-name {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 3vh;
     margin-bottom: 5px;
 }
 
 #away-follow-player-name {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 3vh;
     margin-bottom: 5px;
 }
 
@@ -245,9 +240,11 @@ body {
 }
 
 .stats {
-    font-size: 1.4em;
+    font-size: 1.8vh;
     text-align: left;
-    margin-left: 10px;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .stats p {
