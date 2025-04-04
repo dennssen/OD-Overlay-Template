@@ -1,11 +1,13 @@
-:root{
-    --home-color: rgb(255, 0, 0);
-    --away-color: rgb(0, 0, 255);
+:root {
+    --home-color: rgb(0, 0, 255);
+    --away-color: rgb(255, 0, 0);
 }
 
 body {
     margin: 0;
     overflow: hidden;
+    color: white;
+    font-family: Impact;
 }
 
 .game-container {
@@ -16,116 +18,123 @@ body {
 
     width: 100%;
     height: 100%;
-    padding-top: 20px;
-    padding-bottom: 10px;
 }
 
 #top-bar {
     position: relative;
     width: 100%;
-    height: 20%;
+    height: 23vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
 }
 
-#team1-players {
-    height: 100%;
+#home-players {
+    min-width: 290px;
+    height: fit-content;
     flex-grow: 1;
     display: grid;
-    grid-template-columns: max-content;
-    justify-content: center;
 }
 
-#team2-players {
-    height: 100%;
+#away-players {
+    min-width: 290px;
+    height: fit-content;
     flex-grow: 1;
     display: grid;
-    grid-template-columns: max-content;
-    justify-content: center;
 }
 
-#team1-players div {
-    background-color: var(--home-color);
-    color: black;
+#home-players div {
+    background-image: url(Assets/Bluename.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
     display: grid;
     align-items: center;
     justify-content: center;
-    margin: 5px;
-    border: 3px solid;
-    border-radius: 10px;
+    margin: 1px;
 }
 
-#team2-players div {
-    background-color: var(--away-color);
-    color: black;
+#away-players div {
+    background-image: url(Assets/redname.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
     display: grid;
     align-items: center;
     justify-content: center;
-    margin: 5px;
-    border: 3px solid;
-    border-radius: 10px;
+    margin: 1px;
 }
 
 .player-name p {
     font-size: 1.3em;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 10px 0;
     margin: auto;
 }
 
 #game-bar {
-    height: 80%;
+    background-image: url(Assets/Overlay\ Main.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
     flex-grow: 5;
-    border: 3px solid;
-    border-radius: 20px;
-    background-image: linear-gradient(to right, var(--home-color), var(--away-color));
-    color: black;
 
     display: flex;
     flex-direction: row;
 }
 
-#game-info {
-    color: white;
+#game-info-container {
     flex-grow: 2;
     display: flex;
-    flex-direction: column;
-    margin: 20px;
-    border: 3px solid;
-    border-radius: 20px;
     align-items: center;
+    justify-content: center;
+}
+
+#game-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* Distributes children evenly with space between */
+    height: 19vh;
 }
 
 #game-time {
-    flex-grow: 0.5;
-    padding-top: 2px;
-    font-size: 1.4em;
+    flex-grow: 1;
+    /* Allows it to scale proportionally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
 }
 
 #game-score {
     flex-grow: 2;
-    width: 80%;
+    /* Makes it larger compared to other elements */
+    width: 40%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
-#team1-score {
-    flex-grow: 4;
-    font-size: 2.5em;
-    text-align: center;
-}
-
-#team2-score {
-    flex-grow: 4;
-    font-size: 2.5em;
-    text-align: center;
-}
-
-#score-seperator {
+#away-score {
+    width: 40%;
+    color: var(--away-color);
     flex-grow: 1;
-    font-size: 2.5em;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
+    text-align: center;
+}
+
+#home-score {
+    width: 40%;
+    color: var(--home-color);
+    flex-grow: 1;
+    font-size: 4vh;
+    /* Scales font size with the viewport width */
     text-align: center;
 }
 
@@ -133,8 +142,17 @@ body {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    padding-left: 10px;
-    padding-right: 10px;
+    align-items: center;
+    /* Ensures content is vertically aligned */
+    justify-content: center;
+    /* Ensures content is horizontally centered */
+    padding: 10px;
+    width: 20%;
+    /* Set a fixed width for consistency */
+    height: 100%;
+    /* Ensure they take up the full height of the parent container */
+    box-sizing: border-box;
+    /* Includes padding in the width/height calculation */
 }
 
 .team-info img {
@@ -145,12 +163,11 @@ body {
 .team-info p {
     align-items: center;
     width: fit-content;
-    font-size: 2em;
-    margin: auto;
+    font-size: 4em;
     flex-grow: 2;
 }
 
-#team1-stats-box {
+#home-stats-box {
     display: none;
     height: 30%;
     width: 15%;
@@ -167,7 +184,7 @@ body {
     left: 50px;
 }
 
-#team2-stats-box {
+#away-stats-box {
     display: none;
     height: 30%;
     width: 15%;
@@ -184,6 +201,20 @@ body {
     right: 50px;
 }
 
+#tourny-info {
+    flex-grow: 1;
+    /* Allows it to scale proportionally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vh;
+    /* Scales font size with the viewport width */
+}
+
+#tourny-info p {
+    margin: 0;
+}
+
 .stats-header {
     font-size: 1.6em;
     text-align: left;
@@ -191,18 +222,17 @@ body {
     margin-bottom: 5px;
 }
 
-#team1-follow-player-name {
+#home-follow-player-name {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-#team2-follow-player-name {
+#away-follow-player-name {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 5px;
 }
-
 
 .divider {
     border-top: 4px solid black;
