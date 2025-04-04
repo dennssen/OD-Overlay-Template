@@ -46,7 +46,7 @@ body {
 }
 
 #home-players div {
-    background-image: url(Assets/Bluename.svg);
+    background-image: url(Assets/Svgs/Bluename.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -57,7 +57,7 @@ body {
 }
 
 #away-players div {
-    background-image: url(Assets/redname.svg);
+    background-image: url(Assets/Svgs/redname.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -74,7 +74,7 @@ body {
 }
 
 #game-bar {
-    background-image: url(Assets/Overlay\ Main.svg);
+    background-image: url(Assets/Svgs/Overlay\ Main.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
@@ -171,7 +171,7 @@ body {
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(Assets/BlueSide.svg);
+    background-image: url(Assets/Svgs/BlueSide.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -187,7 +187,7 @@ body {
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(Assets/RedSide.svg);
+    background-image: url(Assets/Svgs/RedSide.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;

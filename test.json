@@ -2,7 +2,7 @@
     "script": "dennssen.overlayInfo.luau",
     "customData": {
         "arenaInfo": {
-            "startTime": "22:55:00",
+            "startTime": "23:43:00",
             "away": {
                 "players": [
                     "player1",
@@ -29,7 +29,7 @@
                     "r": "0.6"
                 }
             },
-            "followedPlayer": "player1"
+            "followedPlayer": "player5"
         },
         "statsInfo": {
             "home": {
