@@ -26,11 +26,33 @@ let arenaStartTime;
 let currentArenaTime = "00:00";
 
 function updateWebiste(data) {
+    teams(data);
     playerNames(data);
     score(data);
     setTime(data);
     color(data);
     followed(data);
+}
+
+function teams(data) {
+    const homeName = data.arenaInfo.home.name;
+    const awayName = data.arenaInfo.away.name;
+
+    const homeImgElement = document.getElementById("home-team-info").getElementsByTagName("img")[0];
+    const homePElement = document.getElementById("home-team-info").getElementsByTagName("p")[0];
+    const awayImgElement = document.getElementById("away-team-info").getElementsByTagName("img")[0];
+    const awayPElement = document.getElementById("away-team-info").getElementsByTagName("p")[0];
+
+    homePElement.innerHTML = homeName;
+    awayPElement.innerHTML = awayName;
+
+    let homeSrc = homeName.toLowerCase();
+    homeSrc = homeSrc.replace(/ /g, "_");
+    let awaySrc = awayName.toLowerCase();
+    awaySrc = awaySrc.replace(/ /g, "_");
+
+    homeImgElement.src = `../Assets/Images/${homeSrc}.png`
+    awayImgElement.src = `../Assets/Images/${awaySrc}.png`
 }
 
 function playerNames(data) {

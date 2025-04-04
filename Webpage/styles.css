@@ -46,7 +46,7 @@ body {
 }
 
 #home-players div {
-    background-image: url(Assets/Svgs/Bluename.svg);
+    background-image: url(../Assets/Svgs/Bluename.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -57,7 +57,7 @@ body {
 }
 
 #away-players div {
-    background-image: url(Assets/Svgs/redname.svg);
+    background-image: url(../Assets/Svgs/redname.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -74,7 +74,7 @@ body {
 }
 
 #game-bar {
-    background-image: url(Assets/Svgs/Overlay\ Main.svg);
+    background-image: url(../Assets/Svgs/Overlay\ Main.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
@@ -85,7 +85,7 @@ body {
 }
 
 #game-info-container {
-    flex-grow: 2;
+    flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,10 +138,10 @@ body {
     text-align: center;
 }
 
-.team-info {
+#home-team-info {
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
+    flex-grow: 2;
     align-items: center;
     /* Ensures content is vertically aligned */
     justify-content: center;
@@ -155,23 +155,65 @@ body {
     /* Includes padding in the width/height calculation */
 }
 
-.team-info img {
+#away-team-info {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 2;
+    align-items: center;
+    /* Ensures content is vertically aligned */
+    justify-content: center;
+    /* Ensures content is horizontally centered */
+    padding: 10px;
+    width: 20%;
+    /* Set a fixed width for consistency */
+    height: 100%;
+    /* Ensure they take up the full height of the parent container */
+    box-sizing: border-box;
+    /* Includes padding in the width/height calculation */
+}
+
+#home-team-info img {
     max-width: 256px;
     aspect-ratio: 1;
 }
 
-.team-info p {
+#away-team-info img {
+    max-width: 256px;
+    aspect-ratio: 1;
+}
+
+#home-team-info p {
+    align-items: left;
+    width: fit-content;
+    flex-grow: 2;
+    font-size: 5vh;
+    /* Dynamically adjusts font size */
+    text-align: left;
+    /* Ensures text is centered */
+    white-space: nowrap;
+    /* Prevents text from wrapping */
+    overflow: hidden;
+    /* Hides overflow if text is too long */
+}
+
+#away-team-info p {
+    text-align: right;
     align-items: center;
     width: fit-content;
-    font-size: 5vh;
     flex-grow: 2;
+    font-size: 5vh;
+    /* Ensures text is centered */
+    white-space: nowrap;
+    /* Prevents text from wrapping */
+    overflow: hidden;
+    /* Hides overflow if text is too long */
 }
 
 #home-stats-box {
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(Assets/Svgs/BlueSide.svg);
+    background-image: url(../Assets/Svgs/BlueSide.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -187,7 +229,7 @@ body {
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(Assets/Svgs/RedSide.svg);
+    background-image: url(../Assets/Svgs/RedSide.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;

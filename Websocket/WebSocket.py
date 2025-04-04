@@ -3,7 +3,7 @@ import os
 import websockets
 import json
 
-JSON_FILE = r"path-to-overlayinfo-config"
+JSON_FILE = r"D:\Web\OverlayWebsite\test.json"
 CLIENTS = set()
 
 async def send_data():
