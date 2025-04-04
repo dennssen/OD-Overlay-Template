@@ -3,7 +3,7 @@ import os
 import websockets
 import json
 
-JSON_FILE = r"D:\Web\OverlayWebsite\test.json"
+JSON_FILE = r"B:\Oculus\Software\another-axiom-a2-cqxlff\A2\Content\Scripts\Cameras\Configs\dennssen.overlayInfo.json"
 CLIENTS = set()
 
 async def send_data():
