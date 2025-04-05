@@ -183,12 +183,9 @@ body {
 }
 
 #home-team-info p {
-    align-items: left;
     width: fit-content;
     flex-grow: 2;
     font-size: 5vh;
-    /* Dynamically adjusts font size */
-    text-align: left;
     /* Ensures text is centered */
     white-space: nowrap;
     /* Prevents text from wrapping */
@@ -197,8 +194,6 @@ body {
 }
 
 #away-team-info p {
-    text-align: right;
-    align-items: center;
     width: fit-content;
     flex-grow: 2;
     font-size: 5vh;
