@@ -46,7 +46,9 @@ body {
 }
 
 #home-players div {
-    background-image: url(../Assets/Svgs/Bluename.svg);
+    color: var(--home-color);
+    text-shadow: 1px 1px 2px black;
+    background-image: url(../Assets/Svgs/Bluename_gray.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -57,7 +59,9 @@ body {
 }
 
 #away-players div {
-    background-image: url(../Assets/Svgs/redname.svg);
+    color: var(--away-color);
+    text-shadow: 1px 1px 2px black;
+    background-image: url(../Assets/Svgs/redname_gray.svg);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -74,7 +78,7 @@ body {
 }
 
 #game-bar {
-    background-image: url(../Assets/Svgs/Overlay\ Main.svg);
+    background-image: url(../Assets/Svgs/Overlay\ Main_gray.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
@@ -123,8 +127,9 @@ body {
 #away-score {
     width: 40%;
     color: var(--away-color);
+    text-shadow: 1px 1px 2px black;
     flex-grow: 1;
-    font-size: 4vh;
+    font-size: 5vh;
     /* Scales font size with the viewport width */
     text-align: center;
 }
@@ -132,13 +137,16 @@ body {
 #home-score {
     width: 40%;
     color: var(--home-color);
+    text-shadow: 1px 1px 2px black;
     flex-grow: 1;
-    font-size: 4vh;
+    font-size: 5vh;
     /* Scales font size with the viewport width */
     text-align: center;
 }
 
 #home-team-info {
+    color: var(--home-color);
+    text-shadow: 1px 1px 2px black;
     display: flex;
     flex-direction: row;
     flex-grow: 2;
@@ -156,6 +164,8 @@ body {
 }
 
 #away-team-info {
+    color: var(--away-color);
+    text-shadow: 1px 1px 2px black;
     display: flex;
     flex-direction: row;
     flex-grow: 2;
@@ -205,10 +215,12 @@ body {
 }
 
 #home-stats-box {
+    color: var(--home-color);
+    text-shadow: 1px 1px 2px black;
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(../Assets/Svgs/BlueSide.svg);
+    background-image: url(../Assets/Svgs/BlueSide_gray.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -221,10 +233,12 @@ body {
 }
 
 #away-stats-box {
+    color: var(--away-color);
+    text-shadow: 1px 1px 2px black;
     display: block;
     height: 25%;
     width: 10%;
-    background-image: url(../Assets/Svgs/RedSide.svg);
+    background-image: url(../Assets/Svgs/RedSide_gray.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;

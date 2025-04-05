@@ -46,13 +46,33 @@ function teams(data) {
     homePElement.innerHTML = homeName;
     awayPElement.innerHTML = awayName;
 
-    let homeSrc = homeName.toLowerCase();
-    homeSrc = homeSrc.replace(/ /g, "_");
-    let awaySrc = awayName.toLowerCase();
-    awaySrc = awaySrc.replace(/ /g, "_");
+    let homeSrc = homeName.toLowerCase().replace(/ /g, "_");
+    let awaySrc = awayName.toLowerCase().replace(/ /g, "_");
 
-    homeImgElement.src = `../Assets/Images/${homeSrc}.png`
-    awayImgElement.src = `../Assets/Images/${awaySrc}.png`
+    const homeImagePath = `../Assets/Images/${homeSrc}.png`;
+    const awayImagePath = `../Assets/Images/${awaySrc}.png`;
+
+    // Check if home image exists
+    const homeImage = new Image();
+    homeImage.onload = () => {
+        homeImgElement.src = homeImagePath;
+    };
+    homeImage.onerror = () => {
+        console.error(`Image not found: ${homeImagePath}`);
+        homeImgElement.src = "../Assets/Images/default.png"; // Fallback image
+    };
+    homeImage.src = homeImagePath;
+
+    // Check if away image exists
+    const awayImage = new Image();
+    awayImage.onload = () => {
+        awayImgElement.src = awayImagePath;
+    };
+    awayImage.onerror = () => {
+        console.error(`Image not found: ${awayImagePath}`);
+        awayImgElement.src = "../Assets/Images/default.png"; // Fallback image
+    };
+    awayImage.src = awayImagePath;
 }
 
 function playerNames(data) {

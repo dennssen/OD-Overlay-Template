@@ -43,7 +43,7 @@ async def send_data():
         except Exception as e:
             print(f"Error reading JSON file: {e}")
 
-async def handle_connection(websocket, path):
+async def handle_connection(websocket):
     """Handles new WebSocket connections and sends initial JSON data."""
     CLIENTS.add(websocket)
     try:
