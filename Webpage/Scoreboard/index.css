@@ -1,6 +1,6 @@
 :root {
-    --homeColor: #ED9734;
-    --awayColor: #4638FF;
+    --homeColor: rgba(255, 255, 0, 255);
+    --awayColor: #2cb5df;
 }
 
 html {
@@ -16,6 +16,11 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+}
+
+.fit {
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .top {
@@ -85,7 +90,19 @@ image {
 
 .player-name text {
     fill: white;
-    font-size: 25px;
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    height: fit-content;
+}
+
+.scoreboard svg:first-child {
+    order: 0;
+    z-index: -1;
+    position: relative;
 }
 
 .scoreboard svg {
@@ -120,4 +137,12 @@ image {
 
 .player-stats-home-gradient {
     stop-color: var(--homeColor);
+}
+
+.player-stats-away-color {
+    fill: var(--awayColor)
+}
+
+.player-stats-away-gradient {
+    stop-color: var(--awayColor);
 }

@@ -16,32 +16,45 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-home-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Dennssen</text>
+                    <text class="fit" X="50%" Y="50%">Dennssen</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInLeft">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-home-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Kirix</text>
+                    <text class="fit" X="50%" Y="50%">Kirix</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInLeft">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-home-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Goran</text>
+                    <text class="fit" X="50%" Y="50%">Goran</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInLeft">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-home-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Deppp</text>
+                    <text class="fit" X="50%" Y="50%">Deppp</text>
                 </svg>
             </div>
         </div>
         <div class="scoreboard">
+            <svg class="animate__animated animate__fadeInDown" style="width: 12.5vw;" viewBox="0 0 215 67" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M211.121 1.5L147.121 65.5H68.3789L4.37891 1.5H211.121Z" fill="url(#paint0_linear_6_33)"
+                    stroke="black" stroke-width="3" />
+                <defs>
+                    <linearGradient id="paint0_linear_6_33" x1="208" y1="3" x2="73" y2="64"
+                        gradientUnits="userSpaceOnUse">
+                        <stop />
+                        <stop offset="1" stop-color="#161616" />
+                    </linearGradient>
+                </defs>
+                <text id="action-timer" x="50%" y="50%" font-size="40">15</text>
+            </svg>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 995 84" overflow="visible">
                 <path fill="url(#a)" d="M0 73.5a10 10 0 0 0 10 10h307V0H10A10 10 0 0 0 0 10v63.5Z" />
                 <path class="scoreboard-home-color" d="M317 83.5h85V0h-85v83.5Z" />
@@ -61,17 +74,19 @@
                 <image href="../../Assets/Images/devious.png" x="0%" y="0%" width="100px" height="100px"
                     transform="translate(-25 -25)">
                 </image>
-                <text x="300px" y="55%" font-size="60" style="text-anchor: end;">Devious</text>
-                <text x="358px" y="50%" font-size="50">0</text>
-                <text x="358px" y="85%" font-size="20" font-style="bold">(2/3)</text>
+                <text class="fit" data-max-font-size="60" data-max-width="250" x="300px" y="55%"
+                    style="text-anchor: end;">Devious</text>
+                <text id="home-points" x="358px" y="50%" font-size="50">0</text>
+                <text id="home-rounds" x="358px" y="85%" font-size="20" font-style="bold">(2/3)</text>
 
-                <text x="497.25" y="18%" font-size="20" font-style="bold">Round 4</text>
-                <text x="497.25" y="60%" font-size="40" font-style="bold">05:00.00</text>
+                <text id="current-round" x="497.25" y="18%" font-size="20" font-style="bold">Round 4</text>
+                <text id="current-time" x="497.25" y="60%" font-size="40" font-style="bold">05:00.00</text>
 
-                <text x="631px" y="50%" font-size="50">0</text>
-                <text x="631px" y="85%" font-size="20" font-style="bold">(1/3)</text>
-                <text x="700px" y="55%" font-size="60" style="text-anchor: start;">IVI</text>
-                <image href="../../Assets/Images/ivi.png" x="100%" y="0%" width="100px" height="100px"
+                <text id="away-points" x="631px" y="50%" font-size="50">0</text>
+                <text id="away-rounds" x="631px" y="85%" font-size="20" font-style="bold">(1/3)</text>
+                <text class="fit" data-max-font-size="60" data-max-width="250" x="700px" y="55%"
+                    style="text-anchor: start;">Cold</text>
+                <image href="../../Assets/Images/cold.png" x="100%" y="0%" width="100px" height="100px"
                     transform="translate(-75 -25)"></image>
             </svg>
         </div>
@@ -80,73 +95,81 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-away-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Gooblin</text>
+                    <text class="fit" X="50%" Y="50%">Pugg</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInRight">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-away-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Weeladdie</text>
+                    <text class="fit" X="50%" Y="50%">Thomaz</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInRight">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-away-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Pesky</text>
+                    <text class="fit" X="50%" Y="50%">AsGeorgie</text>
                 </svg>
             </div>
             <div class="player-name animate__animated animate__fadeInRight">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                     <path class="player-name-away-color" fill="#070707" stroke-width="2"
                         d="M152 1a11 11 0 0 1 11 11v25a11 11 0 0 1-11 11H12A11 11 0 0 1 1 37V12A11 11 0 0 1 12 1h140Z" />
-                    <text X="50%" Y="50%">Zenos</text>
+                    <text class="fit" X="50%" Y="50%">MrVenom</text>
                 </svg>
             </div>
         </div>
     </div>
     <div class="bottom-left animate__animated animate__fadeInUp">
-        <svg viewBox="0 0 217 392" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 136V390.5H215V136L2 78.9268V136Z" fill="url(#paint0_linear_9_46)" />
-            <path class="player-stats-home-color" d="M215 112.5L2 55.4268V2L215 59.0732V112.5Z" />
-            <path d="M2 136V390.5H215V136L2 78.9268V136Z" stroke="black" stroke-width="3" />
-            <path d="M215 112.5L2 55.4268V2L215 59.0732V112.5Z" stroke="black" stroke-width="3" />
+        <svg viewBox="0 0 204 339" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="player-stats-home-color" x="2" y="2" width="200" height="60" rx="10" stroke="black"
+                stroke-width="3" />
+            <rect x="2" y="87" width="200" height="250" rx="10" fill="url(#paint0_linear_34_4)" stroke="black"
+                stroke-width="3" />
+            <path d="M3.5 149.5H200.5" stroke="black" stroke-width="3" />
+            <path d="M2 212H202" stroke="black" stroke-width="3" />
+            <path d="M2 274H202" stroke="black" stroke-width="3" />
             <defs>
-                <linearGradient id="paint0_linear_9_46" x1="215" y1="104.5" x2="-84.5" y2="588"
+                <linearGradient id="paint0_linear_34_4" x1="202" y1="87" x2="-6.99998" y2="541.5"
                     gradientUnits="userSpaceOnUse">
                     <stop class="player-stats-home-gradient" />
-                    <stop offset="1" />
+                    <stop offset="1" stop-color="#070707" />
                 </linearGradient>
             </defs>
-            <text x="2.5vw" y="10%" font-size="35" transform="translate(55 5) rotate(15 0 0)">Dennssen</text>
+            <text class="fit" data-max-font-size="40" x="50%" y="10%">Kirix</text>
 
-            <text x="2.5vw" y="10%" font-size="40" transform="translate(55 105) rotate(15 0 0)">Goals: 4</text>
-            <text x="2.5vw" y="10%" font-size="40" transform="translate(55 175) rotate(15 0 0)">Assists: 1</text>
-            <text x="2.5vw" y="10%" font-size="40" transform="translate(55 245) rotate(15 0 0)">Saves: 3</text>
+            <text x="50%" y="36%" font-size="35">Goals: 2</text>
+            <text x="50%" y="54%" font-size="35">Assists: 4</text>
+            <text x="50%" y="72%" font-size="35">Saves: 4</text>
         </svg>
     </div>
 
-    <div class="bottom-right">
-        <svg viewBox="0 0 217 392" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M215 136V390.5H2V136L215 78.9268V136Z" fill="url(#paint0_linear_33_5)" />
-            <path d="M2 112.5L215 55.4268V2L2 59.0732V112.5Z" fill="#4638FF" />
-            <path d="M215 136V390.5H2V136L215 78.9268V136Z" stroke="black" stroke-width="3" />
-            <path d="M2 112.5L215 55.4268V2L2 59.0732V112.5Z" stroke="black" stroke-width="3" />
+    <div class="bottom-right animate__animated animate__fadeInUp">
+        <svg viewBox="0 0 204 339" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="player-stats-away-color" x="2" y="2" width="200" height="60" rx="10" stroke="black"
+                stroke-width="3" />
+            <rect x="2" y="87" width="200" height="250" rx="10" fill="url(#paint1_linear_34_4)" stroke="black"
+                stroke-width="3" />
+            <path d="M3.5 149.5H200.5" stroke="black" stroke-width="3" />
+            <path d="M2 212H202" stroke="black" stroke-width="3" />
+            <path d="M2 274H202" stroke="black" stroke-width="3" />
             <defs>
-                <linearGradient id="paint0_linear_33_5" x1="2" y1="104.5" x2="301.5" y2="588"
+                <linearGradient id="paint1_linear_34_4" x1="202" y1="87" x2="-6.99998" y2="541.5"
                     gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#4638FF" />
-                    <stop offset="1" />
+                    <stop class="player-stats-away-gradient" />
+                    <stop offset="1" stop-color="#070707" />
                 </linearGradient>
             </defs>
-            <text x="2.5vw" y="19%" font-size="35" transform="translate(30 5) rotate(-15 0 0)">Gooblin</text>
+            <text class="fit" data-max-font-size="40" x="50%" y="10%">Thomaz</text>
 
-            <text x="2.5vw" y="19%" font-size="40" transform="translate(30 105) rotate(-15 0 0)">Goals: 0</text>
-            <text x="2.5vw" y="19%" font-size="40" transform="translate(30 175) rotate(-15 0 0)">Assists: 0</text>
-            <text x="2.5vw" y="19%" font-size="40" transform="translate(30 245) rotate(-15 0 0)">Saves: 0</text>
+            <text x="50%" y="36%" font-size="35">Goals: 0</text>
+            <text x="50%" y="54%" font-size="35">Assists: 0</text>
+            <text x="50%" y="72%" font-size="35">Saves: 0</text>
         </svg>
     </div>
+
+    <script src="index.js"></script>
 </body>
 
 </html>
