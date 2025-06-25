@@ -1,5 +1,6 @@
 const imageTypes = ["png", "jpg"]
 
+let lastGracePeriod = false
 let lastHomePlayerNames = []
 let lastAwayPlayerNames = []
 
@@ -35,9 +36,15 @@ async function updateOverlay() {
         const gamemode = await gamemodeResponse.json()
 
         setTeamColors(gamemode)
+        if (!lastGracePeriod && extraArenaInfo.isGracePeriod) {
+            setGoalboard(extraArenaInfo, true)
+        } else if (lastGracePeriod && !extraArenaInfo.isGracePeriod) {
+            setGoalboard(extraArenaInfo, false)
+        }
         setScoreboardInfo(gamemode, extraArenaInfo)
         setTeamPlayers(extraArenaInfo)
         setFollowedPlayer(extraArenaInfo, statsInfo)
+        lastGracePeriod = extraArenaInfo.isGracePeriod
     } catch (error) {
         console.log(error)
     }
@@ -99,6 +106,42 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
     }
 
     actionTimer.innerHTML = actionTimerSeconds
+}
+
+function setGoalboard(extraArenaInfo, activate) {
+    const goalboardElement = document.getElementById("goalboard")
+    if (activate) {
+        const colorElement = document.getElementById("goalboard-color")
+        colorElement.setAttribute("stop-color", `var(--${extraArenaInfo.lastShotInfo.team}Color)`)
+        goalboardElement.classList.remove("animate__fadeOutDownBig")
+        goalboardElement.classList.add("animate__fadeInUpBig")
+
+        const shooterElement = document.getElementById("goalboard-shooter")
+        const assisterElement = document.getElementById("goalboard-assister")
+        const shotSpeedElement = document.getElementById("goalboard-shot-speed")
+        const shotDistanceElement = document.getElementById("goalboard-shot-distance")
+
+        let shooter = extraArenaInfo.lastShotInfo.shooter
+        if (shooter === "") {
+            shooter = "Unknown"
+        }
+        const assister = extraArenaInfo.lastShotInfo.assister
+        const shotSpeed = Math.floor(extraArenaInfo.lastShotInfo.shotSpeed * 10) / 10
+        const shotDistance = Math.floor(extraArenaInfo.lastShotInfo.shotDistanceMeters * 10) / 10
+
+        updateSVGText(shooterElement, shooter)
+        if (assister !== "") {
+            updateSVGText(assisterElement, `Assisted By: ${assister}`)
+        } else {
+            assisterElement.innerHTML = ""
+        }
+
+        shotSpeedElement.innerHTML = `${shotSpeed}m/s`
+        shotDistanceElement.innerHTML = `${shotDistance}m`
+    } else {
+        goalboardElement.classList.remove("animate__fadeInUpBig")
+        goalboardElement.classList.add("animate__fadeOutDownBig")
+    }
 }
 
 function setTeamColors(gamemode) {

@@ -18,6 +18,18 @@ body {
     margin: 0;
 }
 
+text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+image {
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
 .fit {
     display: inline-block;
     white-space: nowrap;
@@ -27,6 +39,21 @@ body {
     display: flex;
     flex-direction: row;
     gap: 5vw;
+}
+
+.middle {
+    position: absolute;
+    bottom: 25vh;
+    left: 25vw;
+}
+
+.middle svg {
+    width: 50vw;
+    height: auto;
+}
+
+.middle text {
+    fill: white;
 }
 
 .bottom-left {
@@ -74,18 +101,6 @@ body {
 .player-name svg {
     width: 10vw;
     height: auto;
-}
-
-text {
-    text-anchor: middle;
-    dominant-baseline: middle;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-}
-
-image {
-    text-anchor: middle;
-    dominant-baseline: middle;
 }
 
 .player-name text {
