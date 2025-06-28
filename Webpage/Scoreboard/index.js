@@ -74,10 +74,10 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
     updateSVGText(homeTeamName, homeName)
     updateSVGText(awayTeamName, awayName)
 
-    const homeTeamLogoUrl = `../../Assets/Images/${homeName.toLowerCase().replaceAll(" ", "_")}.png`
+    const homeTeamLogoUrl = `Assets/Images/${homeName.toLowerCase().replaceAll(" ", "_")}.png`
     setImageWithFallback(homeTeamLogo, homeTeamLogoUrl)
 
-    const awayTeamLogoUrl = `../../Assets/Images/${awayName.toLowerCase().replaceAll(" ", "_")}.png`
+    const awayTeamLogoUrl = `Assets/Images/${awayName.toLowerCase().replaceAll(" ", "_")}.png`
     setImageWithFallback(awayTeamLogo, awayTeamLogoUrl)
 
     homePoints.innerHTML = gamemode.teams[0].score

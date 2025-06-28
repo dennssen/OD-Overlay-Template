@@ -1,0 +1,38 @@
+{
+    "statsInfo": {
+        "home": {
+            "Player1_Name": {
+                "assists": 0,
+                "goals": 2,
+                "saves": 0
+            },
+            "Player2_Name": {
+                "assists": 1,
+                "goals": 1,
+                "saves": 0
+            },
+            "Player3_Name": {
+                "assists": 0,
+                "goals": 1,
+                "saves": 0
+            }
+        },
+        "away": {
+            "Player4_Name": {
+                "assists": 2,
+                "goals": 1,
+                "saves": 0
+            },
+            "Player5_Name": {
+                "assists": 0,
+                "goals": 0,
+                "saves": 4
+            },
+            "Player6_Name": {
+                "assists": 0,
+                "goals": 3,
+                "saves": 1
+            }
+        }
+    }
+}

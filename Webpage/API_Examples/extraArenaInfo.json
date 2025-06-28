@@ -1,0 +1,30 @@
+{
+    "extraArenaInfo": {
+        "home": {
+            "name": "Home_Team_Name",
+            "players": [
+                "Player1_Name",
+                "Player2_Name",
+                "Player3_Name"
+            ]
+        },
+        "away": {
+            "name": "Away_Team_Name",
+            "players": [
+                "Player4_Name",
+                "Player5_Name",
+                "Player6_Name"
+            ]
+        },
+        "lastShotInfo": {
+            "assister": "Player1_Name",
+            "shotSpeed": 18,
+            "team": "home",
+            "shotDistanceMeters": 100,
+            "shooter": "Player2_Name"
+        },
+        "bestOf": 1,
+        "matchLengthSeconds": 300,
+        "followedPlayer": "Player5_Name"
+    }
+}
