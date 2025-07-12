@@ -16,6 +16,20 @@
                 "Player6_Name"
             ]
         },
+        "rounds": [
+            {
+                "score": {
+                    "home": 4,
+                    "away": 2
+                }
+            },
+            {
+                "score": {
+                    "home": 3,
+                    "away": 0
+                }
+            }
+        ],
         "lastShotInfo": {
             "assister": "Player1_Name",
             "shotSpeed": 18,
@@ -23,7 +37,7 @@
             "shotDistanceMeters": 100,
             "shooter": "Player2_Name"
         },
-        "bestOf": 1,
+        "bestOf": 3,
         "matchLengthSeconds": 300,
         "followedPlayer": "Player5_Name"
     }

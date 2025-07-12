@@ -1,0 +1,77 @@
+:root {
+    --noColor: #161616;
+    --homeColor: #7b27ca;
+    --awayColor: #2cb5df;
+}
+
+html {
+    font-family: 'Franklin Gothic Medium';
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+image {
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.fit {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    height: fit-content;
+    gap: 0;
+}
+
+.scoreboard svg:first-child {
+    margin: -1px;
+    order: 0;
+    z-index: -1;
+    position: relative;
+}
+
+.scoreboard svg {
+    width: 65vw;
+    height: auto;
+}
+
+.scoreboard text {
+    fill: white;
+}
+
+#bestOf {
+    width: 12.5vw;
+}
+
+#bestOf path {
+    fill: var(--noColor);
+}
+
+/* Color */
+
+.scoreboard-home-color {
+    fill: var(--homeColor);
+}
+
+.scoreboard-away-color {
+    fill: var(--awayColor);
+}

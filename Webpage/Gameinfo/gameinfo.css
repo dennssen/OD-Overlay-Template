@@ -107,26 +107,9 @@ image {
     fill: white;
 }
 
-.scoreboard {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    height: fit-content;
-}
-
-.scoreboard svg:first-child {
-    order: 0;
-    z-index: -1;
-    position: relative;
-}
-
-.scoreboard svg {
-    width: 65vw;
+.scoreboard-area {
     height: auto;
-}
-
-.scoreboard text {
-    fill: white;
+    width: 65vw;
 }
 
 /* Color */

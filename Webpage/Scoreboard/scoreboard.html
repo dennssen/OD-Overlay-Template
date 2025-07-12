@@ -4,140 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+
+    <link rel="stylesheet" href="scoreboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <title>Scoreboard</title>
 </head>
 
 <body>
-    <div class="top">
-        <div id="home-players" class="players-container">
-        </div>
-        <div class="scoreboard">
-            <svg class="animate__animated animate__fadeInDown" style="width: 12.5vw;" viewBox="0 0 215 67" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M211.121 1.5L147.121 65.5H68.3789L4.37891 1.5H211.121Z" fill="url(#paint0_linear_6_33)"
-                    stroke="black" stroke-width="3" />
-                <defs>
-                    <linearGradient id="paint0_linear_6_33" x1="208" y1="3" x2="73" y2="64"
-                        gradientUnits="userSpaceOnUse">
-                        <stop />
-                        <stop offset="1" stop-color="#161616" />
-                    </linearGradient>
-                </defs>
-                <text id="action-timer" x="50%" y="50%" font-size="40">15</text>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 995 84" overflow="visible">
-                <path fill="url(#a)" d="M0 73.5a10 10 0 0 0 10 10h307V0H10A10 10 0 0 0 0 10v63.5Z" />
-                <path class="scoreboard-home-color" d="M317 83.5h85V0h-85v83.5Z" />
-                <path fill="url(#b)" d="M674.5 83.5h310a10 10 0 0 0 10-10V10a10 10 0 0 0-10-10h-310v83.5Z" />
-                <path fill="#000" d="M402 83.5h188V0H402v83.5Z" />
-                <path class="scoreboard-away-color" d="M590 83.5h84.5V0H590v83.5Z" />
-                <defs>
-                    <linearGradient id="a" x1="0" x2="125" y1="83" y2="14" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#1A1A1A" />
-                        <stop offset="1" />
-                    </linearGradient>
-                    <linearGradient id="b" x1="876" x2="995" y1="22.5" y2="83" gradientUnits="userSpaceOnUse">
-                        <stop />
-                        <stop offset="1" stop-color="#1A1A1A" />
-                    </linearGradient>
-                </defs>
-                <image id="home-team-image" href="" x="0%" y="0%" width="100px" height="100px"
-                    transform="translate(-25 -25)">
-                </image>
-                <text id="home-team-name" class="fit" data-max-font-size="60" data-max-width="250" x="300px" y="55%"
-                    style="text-anchor: end;"></text>
-                <text id="home-points" x="358px" y="50%" font-size="50">0</text>
-                <text id="home-rounds" x="358px" y="85%" font-size="20" font-style="bold">(0/1)</text>
+    <div class="scoreboard">
+        <svg class="animate__animated animate__fadeInDown" style="width: 12.5vw;" viewBox="0 0 215 67" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M211.121 1.5L147.121 65.5H68.3789L4.37891 1.5H211.121Z" fill="url(#paint0_linear_6_33)"
+                stroke="black" stroke-width="3" />
+            <defs>
+                <linearGradient id="paint0_linear_6_33" x1="208" y1="3" x2="73" y2="64" gradientUnits="userSpaceOnUse">
+                    <stop />
+                    <stop offset="1" stop-color="#161616" />
+                </linearGradient>
+            </defs>
+            <text id="action-timer" x="50%" y="50%" font-size="40">15</text>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 995 84" overflow="visible">
+            <path fill="url(#a)" d="M0 73.5a10 10 0 0 0 10 10h307V0H10A10 10 0 0 0 0 10v63.5Z" />
+            <path class="scoreboard-home-color" d="M317 83.5h85V0h-85v83.5Z" />
+            <path fill="url(#b)" d="M674.5 83.5h310a10 10 0 0 0 10-10V10a10 10 0 0 0-10-10h-310v83.5Z" />
+            <path fill="#000" d="M402 83.5h188V0H402v83.5Z" />
+            <path class="scoreboard-away-color" d="M590 83.5h84.5V0H590v83.5Z" />
+            <defs>
+                <linearGradient id="a" x1="0" x2="125" y1="83" y2="14" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#1A1A1A" />
+                    <stop offset="1" />
+                </linearGradient>
+                <linearGradient id="b" x1="876" x2="995" y1="22.5" y2="83" gradientUnits="userSpaceOnUse">
+                    <stop />
+                    <stop offset="1" stop-color="#1A1A1A" />
+                </linearGradient>
+            </defs>
+            <image id="home-team-image" href="" x="0%" y="0%" width="100px" height="100px"
+                transform="translate(-25 -25)">
+            </image>
+            <text id="home-team-name" class="fit" data-max-font-size="60" data-max-width="250" x="300px" y="55%"
+                style="text-anchor: end;"></text>
+            <text id="home-points" x="358px" y="50%" font-size="50">0</text>
 
-                <text id="current-round" x="497.25" y="18%" font-size="20" font-style="bold">Round 0</text>
-                <text id="current-time" x="497.25" y="60%" font-size="40" font-style="bold">05:00.00</text>
+            <text id="current-round" x="497.25" y="18%" font-size="20" font-style="bold">Round 0</text>
+            <text id="current-time" x="497.25" y="60%" font-size="40" font-style="bold">05:00.00</text>
 
-                <text id="away-points" x="631px" y="50%" font-size="50">0</text>
-                <text id="away-rounds" x="631px" y="85%" font-size="20" font-style="bold">(0/1)</text>
-                <text id="away-team-name" class="fit" data-max-font-size="60" data-max-width="250" x="700px" y="55%"
-                    style="text-anchor: start;"></text>
-                <image id="away-team-image" href="" x="100%" y="0%" width="100px" height="100px"
-                    transform="translate(-75 -25)"></image>
-            </svg>
-        </div>
-        <div id="away-players" class="players-container">
-            <div class="player-name animate__animated animate__fadeInRight">
-            </div>
-        </div>
+            <text id="away-points" x="631px" y="50%" font-size="50">0</text>
+            <text id="away-team-name" class="fit" data-max-font-size="60" data-max-width="250" x="700px" y="55%"
+                style="text-anchor: start;"></text>
+            <image id="away-team-image" href="" x="100%" y="0%" width="100px" height="100px"
+                transform="translate(-75 -25)"></image>
+        </svg>
+    </div>
 
-        <div id="goalboard" class="middle animate__animated animate__fadeOutDownBig">
-            <svg width="702" height="98" viewBox="0 0 702 98" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1H701L645.574 97H56.4256L1 1Z" fill="url(#paint0_linear_42_3)" stroke="black" />
-                <defs>
-                    <linearGradient id="paint0_linear_42_3" x1="351" y1="-49.5" x2="351" y2="470"
-                        gradientUnits="userSpaceOnUse">
-                        <stop id="goalboard-color" stop-color="var(--homeColor)" />
-                        <stop offset="1" stop-color="#737373" stop-opacity="0" />
-                    </linearGradient>
-                </defs>
-                <text id="goalboard-shooter" class="fit" data-max-width="280" data-max-font-size="60" x="50%"
-                    y="38%"></text>
-                <text id="goalboard-assister" class="fit" data-max-width="250" data-max-font-size="25" x="50%"
-                    y="84%"></text>
-                <text id="goalboard-shot-speed" style="text-anchor: end;" x="31.5%" y="50%" font-size="36">0m/s</text>
-                <text x="22%" y="75%" font-size="24">Shot Speed</text>
-                <text id="goalboard-shot-distance" style="text-anchor: start;" x="68.5%" y="50%"
-                    font-size="36">0m</text>
-                <text x="80%" y="75%" font-size="24">Shot Distance</text>
-            </svg>
-        </div>
-
-        <div class="bottom-left animate__animated animate__fadeOutDown">
-            <svg viewBox="0 0 204 339" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect class="player-stats-home-color" x="2" y="2" width="200" height="60" rx="10" stroke="black"
-                    stroke-width="3" />
-                <rect x="2" y="87" width="200" height="250" rx="10" fill="url(#paint0_linear_34_4)" stroke="black"
-                    stroke-width="3" />
-                <path d="M3.5 149.5H200.5" stroke="black" stroke-width="3" />
-                <path d="M2 212H202" stroke="black" stroke-width="3" />
-                <path d="M2 274H202" stroke="black" stroke-width="3" />
-                <defs>
-                    <linearGradient id="paint0_linear_34_4" x1="202" y1="87" x2="-6.99998" y2="541.5"
-                        gradientUnits="userSpaceOnUse">
-                        <stop class="player-stats-home-gradient" />
-                        <stop offset="1" stop-color="#070707" />
-                    </linearGradient>
-                </defs>
-                <text id="home-stats-name" class="fit" data-padding="20" data-max-font-size="40" x="50%" y="10%"></text>
-
-                <text id="home-stats-goals" x="50%" y="36%" font-size="35">Goals: 0</text>
-                <text id="home-stats-assists" x="50%" y="54%" font-size="35">Assists: 0</text>
-                <text id="home-stats-saves" x="50%" y="72%" font-size="35">Saves: 0</text>
-            </svg>
-        </div>
-
-        <div class="bottom-right animate__animated animate__fadeOutDown">
-            <svg viewBox="0 0 204 339" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect class="player-stats-away-color" x="2" y="2" width="200" height="60" rx="10" stroke="black"
-                    stroke-width="3" />
-                <rect x="2" y="87" width="200" height="250" rx="10" fill="url(#paint1_linear_34_4)" stroke="black"
-                    stroke-width="3" />
-                <path d="M3.5 149.5H200.5" stroke="black" stroke-width="3" />
-                <path d="M2 212H202" stroke="black" stroke-width="3" />
-                <path d="M2 274H202" stroke="black" stroke-width="3" />
-                <defs>
-                    <linearGradient id="paint1_linear_34_4" x1="202" y1="87" x2="-6.99998" y2="541.5"
-                        gradientUnits="userSpaceOnUse">
-                        <stop class="player-stats-away-gradient" />
-                        <stop offset="1" stop-color="#070707" />
-                    </linearGradient>
-                </defs>
-                <text id="away-stats-name" class="fit" data-padding="20" data-max-font-size="40" x="50%" y="10%"></text>
-
-                <text id="away-stats-goals" x="50%" y="36%" font-size="35">Goals: 0</text>
-                <text id="away-stats-assists" x="50%" y="54%" font-size="35">Assists: 0</text>
-                <text id="away-stats-saves" x="50%" y="72%" font-size="35">Saves: 0</text>
-            </svg>
-        </div>
-
-        <script src="index.js"></script>
+    <script src="scoreboard.js"></script>
 </body>
 
 </html>

@@ -4,9 +4,6 @@ let lastGracePeriod = false
 let lastHomePlayerNames = []
 let lastAwayPlayerNames = []
 
-let lastApiUpdate = { time: 0, timestamp: 0, isRunning: false };
-let animationId = null;
-
 const compareArrays = (a, b) =>
     a.length === b.length &&
     a.every((element, index) => element === b[index]);
@@ -41,7 +38,6 @@ async function updateOverlay() {
         } else if (lastGracePeriod && !extraArenaInfo.isGracePeriod) {
             setGoalboard(extraArenaInfo, false)
         }
-        setScoreboardInfo(gamemode, extraArenaInfo)
         setTeamPlayers(extraArenaInfo)
         setFollowedPlayer(extraArenaInfo, statsInfo)
         lastGracePeriod = extraArenaInfo.isGracePeriod
@@ -51,62 +47,6 @@ async function updateOverlay() {
 }
 
 setInterval(updateOverlay, 250)
-
-function setScoreboardInfo(gamemode, extraArenaInfo) {
-    const homePoints = document.getElementById("home-points")
-    const awayPoints = document.getElementById("away-points")
-
-    const homeRounds = document.getElementById("home-rounds")
-    const awayRounds = document.getElementById("away-rounds")
-
-    const currentRound = document.getElementById("current-round")
-    const actionTimer = document.getElementById("action-timer")
-
-    const homeTeamName = document.getElementById("home-team-name")
-    const homeTeamLogo = document.getElementById("home-team-image")
-
-    const awayTeamName = document.getElementById("away-team-name")
-    const awayTeamLogo = document.getElementById("away-team-image")
-
-    const homeName = extraArenaInfo.home.name
-    const awayName = extraArenaInfo.away.name
-
-    updateSVGText(homeTeamName, homeName)
-    updateSVGText(awayTeamName, awayName)
-
-    const homeTeamLogoUrl = `Assets/Images/${homeName.toLowerCase().replaceAll(" ", "_")}.png`
-    setImageWithFallback(homeTeamLogo, homeTeamLogoUrl)
-
-    const awayTeamLogoUrl = `Assets/Images/${awayName.toLowerCase().replaceAll(" ", "_")}.png`
-    setImageWithFallback(awayTeamLogo, awayTeamLogoUrl)
-
-    homePoints.innerHTML = gamemode.teams[0].score
-    awayPoints.innerHTML = gamemode.teams[1].score
-
-    const homeRoundsWon = gamemode.teams[0].roundsWon
-    const awayRoundsWon = gamemode.teams[1].roundsWon
-
-    const bestOfRounds = (extraArenaInfo.bestOf + 1) / 2
-
-    homeRounds.innerHTML = `(${homeRoundsWon}/${bestOfRounds})`
-    awayRounds.innerHTML = `(${awayRoundsWon}/${bestOfRounds})`
-
-    currentRound.innerHTML = `Round ${Math.min(homeRoundsWon + awayRoundsWon + 1, extraArenaInfo.bestOf)}`
-    updateTimer(gamemode.timeSeconds, extraArenaInfo.matchLengthSeconds)
-
-    const actionTimerSeconds = Math.ceil(gamemode.secondaryTimeSeconds)
-
-    if (actionTimerSeconds === 0 && actionTimer.innerHTML != 0) {
-        actionTimer.parentElement.classList.remove("animate__fadeInDown")
-        actionTimer.parentElement.classList.add("animate__fadeOutUp")
-    }
-    else if (actionTimerSeconds !== 0 && actionTimer.innerHTML == 0) {
-        actionTimer.parentElement.classList.add("animate__fadeInDown")
-        actionTimer.parentElement.classList.remove("animate__fadeOutUp")
-    }
-
-    actionTimer.innerHTML = actionTimerSeconds
-}
 
 function setGoalboard(extraArenaInfo, activate) {
     const goalboardElement = document.getElementById("goalboard")
@@ -248,7 +188,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
         const assistsStats = document.getElementById("home-stats-assists")
         const savesStats = document.getElementById("home-stats-saves")
 
-        const playerStats = statsInfo.home[followedPlayerName]
+        let playerStats = statsInfo.home[followedPlayerName]
 
         if (typeof (playerStats) === "undefined") {
             playerStats = {
@@ -283,7 +223,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
         const assistsStats = document.getElementById("away-stats-assists")
         const savesStats = document.getElementById("away-stats-saves")
 
-        const playerStats = statsInfo.away[followedPlayerName]
+        let playerStats = statsInfo.away[followedPlayerName]
 
         if (typeof (playerStats) === "undefined") {
             playerStats = {
@@ -315,59 +255,6 @@ function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
         fontSize -= 1;
         text.setAttribute("font-size", fontSize);
     }
-}
-
-function updateDisplay() {
-    const showMs = lastApiUpdate.isRunning;
-
-    const now = Date.now();
-    const elapsed = (now - lastApiUpdate.timestamp) / 1000;
-    let currentTime = 0;
-
-    if (showMs) {
-        currentTime = Math.max(0, lastApiUpdate.time - elapsed);
-    }
-    else {
-        currentTime = lastApiUpdate.time;
-    }
-
-    const currentTimeElement = document.getElementById("current-time")
-    currentTimeElement.innerHTML = convertSecondsToTime(currentTime, showMs);
-
-    if (currentTime > 0) {
-        animationId = requestAnimationFrame(updateDisplay);
-    }
-}
-
-function updateTimer(newTimeSeconds, matchLengthSeconds) {
-    if (animationId) cancelAnimationFrame(animationId);
-
-    const isRunning = newTimeSeconds !== matchLengthSeconds;
-
-    lastApiUpdate = {
-        time: newTimeSeconds,
-        timestamp: Date.now(),
-        isRunning: isRunning
-    };
-
-    updateDisplay();
-}
-
-function convertSecondsToTime(totalSeconds, showMilliseconds = true) {
-    const minutes = Math.floor(totalSeconds / 60);
-    const remainingSeconds = totalSeconds % 60;
-    const seconds = Math.floor(remainingSeconds);
-
-    let milliseconds = 0;
-    if (showMilliseconds) {
-        milliseconds = Math.floor((remainingSeconds - seconds) * 100);
-    }
-
-    const pad = (n, digits = 2) => n.toString().padStart(digits, '0');
-
-    return showMilliseconds
-        ? `${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 2)}`
-        : `${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 2)}`;
 }
 
 function updateSVGText(text, newContent) {
