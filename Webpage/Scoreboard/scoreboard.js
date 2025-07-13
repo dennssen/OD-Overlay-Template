@@ -157,6 +157,10 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
 }
 
 function setRoundsWon(extraArenaInfo) {
+    if (extraArenaInfo.bestOf < 3) {
+        return;
+    }
+
     let homeRoundsWon = 0;
     let awayRoundsWon = 0;
 

@@ -1,0 +1,75 @@
+:root {
+    --homeColor: #7b27ca;
+    --awayColor: #2cb5df;
+}
+
+html {
+    font-family: 'Franklin Gothic Medium';
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fit {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.container {
+    margin: 0 auto;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5vw;
+}
+
+.home-player-stats {
+    width: 32vw;
+    height: auto;
+}
+
+.home-player-stats text {
+    fill: black;
+}
+
+.round-stats {
+    width: 15vw;
+    height: auto;
+}
+
+.round-stats text {
+    fill: black;
+}
+
+.away-player-stats {
+    width: 32vw;
+    height: auto;
+}
+
+.away-player-stats text {
+    fill: black;
+}
+
+.home-color {
+    fill: var(--homeColor);
+}
+
+.away-color {
+    fill: var(--awayColor);
+}
