@@ -1,41 +1,23 @@
-const debug = false;
-
 let lastBestOf = 0;
 
 let lastApiUpdate = { time: 0, timestamp: 0, isRunning: false };
 let animationId = null;
 
+// this is our main loop
 async function updateOverlay() {
     const camera_id = "dennssen.overlayInfo";
 
     try {
-        let statsInfo
-        let extraArenaInfo
-        let slot_id
+        const cameraConfigResponse = await fetch(`http://localhost:5420/cameras/${camera_id}/config`);
 
-        if (debug) {
-            let response1 = await fetch("../API_Examples/statsInfo.json");
-            statsInfo = response1.json().value;
-            let response2 = await fetch("../API_Examples/extraArenaInfo.json")
-            extraArenaInfo = response2.json().value;
-            slot_id = "TKB_Driftplex01"
-
-            console.log(extraArenaInfo)
-            return;
-        } else {
-            const cameraConfigResponse = await fetch(`http://localhost:5420/cameras/${camera_id}/config`);
-
-            if (!cameraConfigResponse.ok) {
-                return
-            }
-
-            const cameraConfig = await cameraConfigResponse.json();
-
-            statsInfo = cameraConfig.statsInfo;
-            extraArenaInfo = cameraConfig.extraArenaInfo;
-            slot_id = cameraConfig.gamemodeSlotId;
+        if (!cameraConfigResponse.ok) {
+            return
         }
 
+        const cameraConfig = await cameraConfigResponse.json();
+
+        const extraArenaInfo = cameraConfig.extraArenaInfo;
+        const slot_id = cameraConfig.gamemodeSlotId;
 
         const gamemodeResponse = await fetch(`http://localhost:5420/state/gamemodes/${slot_id}`)
 
@@ -66,6 +48,7 @@ function setTeamColors(gamemode) {
 }
 
 function setBestOfSVG(extraArenaInfo) {
+    // We only want to run this function if the amount of rounds being played have changed
     if (lastBestOf === extraArenaInfo.bestOf) {
         return;
     }
@@ -75,7 +58,8 @@ function setBestOfSVG(extraArenaInfo) {
         bestOfSVG.remove()
     }
 
-    //create new svg
+    // Here we set the correct svg. Because I'm unfamiliar with SVGs i opted for making pre-existing SVGs and picking the correct one.
+    // But there is porbably a better way to do this if you're able to make your own SVGs in code.
     const scoreboardHTML = document.getElementsByClassName("scoreboard")[0]
     if (extraArenaInfo.bestOf === 3) {
         scoreboardHTML.innerHTML += `<svg id="bestOf" viewBox="0 0 188 59" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,8 +140,11 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
     actionTimer.innerHTML = actionTimerSeconds
 }
 
+// Recolors the SVG that is set by "setBestOfSVG()" to show who has won what rounds
+// If the SVG was created in code this could probably be done a better way
 function setRoundsWon(extraArenaInfo) {
     if (extraArenaInfo.bestOf < 3) {
+        // If the amount of rounds is less than 3 the SVG doesn't exist
         return;
     }
 
@@ -218,6 +205,7 @@ function setRoundsWon(extraArenaInfo) {
     }
 }
 
+// Used to resize the font size of text content to fit it's container.
 function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
     if (newContent !== "") {
         text.innerHTML = newContent;
@@ -289,6 +277,7 @@ function convertSecondsToTime(totalSeconds, showMilliseconds = true) {
         : `${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 2)}`;
 }
 
+// This is a helper function that makes sure the new text content will fit inside it's container.
 function updateSVGText(text, newContent) {
     const svg = text.parentElement;
     const maxWidth = text.dataset.maxWidth || svg.viewBox.baseVal.width;
@@ -318,9 +307,8 @@ function setImageWithFallback(imgElement, url) {
         imgElement.setAttribute("href", url);
     };
     testImage.onerror = function () {
-        // Image doesn't exist, clear or set to empty
-        imgElement.removeAttribute("href"); // or set to a default/empty image
-        // Alternative: imgElement.setAttribute("href", "data:image/svg+xml;charset=UTF-8,");
+        // Image doesn't exist, clear
+        imgElement.removeAttribute("href");
     };
     testImage.src = url;
 }

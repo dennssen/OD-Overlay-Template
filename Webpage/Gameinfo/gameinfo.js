@@ -8,6 +8,7 @@ const compareArrays = (a, b) =>
     a.length === b.length &&
     a.every((element, index) => element === b[index]);
 
+// This is the main loop
 async function updateOverlay() {
     const camera_id = "dennssen.overlayInfo";
 
@@ -48,6 +49,7 @@ async function updateOverlay() {
 
 setInterval(updateOverlay, 250)
 
+// By "Goalboard" I mean the little box containing info about the current goal.
 function setGoalboard(extraArenaInfo, activate) {
     const goalboardElement = document.getElementById("goalboard")
     if (activate) {
@@ -142,6 +144,7 @@ function setTeamPlayers(extraArenaInfo) {
     lastAwayPlayerNames = awayPlayerNames
 }
 
+// Check if a player is followed, if so, show info about the player in their respective corner
 function setFollowedPlayer(extraArenaInfo, statsInfo) {
     const followedPlayerName = extraArenaInfo.followedPlayer
 
@@ -239,6 +242,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
     }
 }
 
+// Used to resize the font size of text content to fit it's container.
 function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
     if (newContent !== "") {
         text.innerHTML = newContent;
@@ -257,6 +261,7 @@ function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
     }
 }
 
+// This is a helper function that makes sure the new text content will fit inside it's container.
 function updateSVGText(text, newContent) {
     const svg = text.parentElement;
     const maxWidth = text.dataset.maxWidth || svg.viewBox.baseVal.width;
@@ -287,8 +292,7 @@ function setImageWithFallback(imgElement, url) {
     };
     testImage.onerror = function () {
         // Image doesn't exist, clear or set to empty
-        imgElement.removeAttribute("href"); // or set to a default/empty image
-        // Alternative: imgElement.setAttribute("href", "data:image/svg+xml;charset=UTF-8,");
+        imgElement.removeAttribute("href");
     };
     testImage.src = url;
 }
