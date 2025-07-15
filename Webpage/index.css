@@ -53,3 +53,10 @@ a {
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 2.5vh 0;
 }
+
+.footer {
+    margin: 2.5vh auto;
+    width: fit-content;
+    color: darkgray;
+    font-size: 1.1em;
+}
