@@ -1,6 +1,9 @@
 const imageTypes = ["png", "jpg"]
 
 let lastGracePeriod = false
+let gracerPeriodStartTime = 0
+let goalboardMaxLength = 7
+let isGoalboardActive = false
 let lastHomePlayerNames = []
 let lastAwayPlayerNames = []
 
@@ -36,7 +39,7 @@ async function updateOverlay() {
         setTeamColors(gamemode)
         if (!lastGracePeriod && extraArenaInfo.isGracePeriod) {
             setGoalboard(extraArenaInfo, true)
-        } else if (lastGracePeriod && !extraArenaInfo.isGracePeriod) {
+        } else if (lastGracePeriod && (!extraArenaInfo.isGracePeriod || gamemode.timeSeconds < gracerPeriodStartTime - goalboardMaxLength)) {
             setGoalboard(extraArenaInfo, false)
         }
         setTeamPlayers(extraArenaInfo)
@@ -51,8 +54,14 @@ setInterval(updateOverlay, 250)
 
 // By "Goalboard" I mean the little box containing info about the current goal.
 function setGoalboard(extraArenaInfo, activate) {
+    if (isGoalboardActive === activate) {
+        return;
+    }
+
     const goalboardElement = document.getElementById("goalboard")
     if (activate) {
+        isGoalboardActive = true
+        gracerPeriodStartTime = gamemode.timeSeconds
         const colorElement = document.getElementById("goalboard-color")
         colorElement.setAttribute("stop-color", `var(--${extraArenaInfo.lastShotInfo.team}Color)`)
         goalboardElement.classList.remove("animate__fadeOutDownBig")
@@ -81,6 +90,7 @@ function setGoalboard(extraArenaInfo, activate) {
         shotSpeedElement.innerHTML = `${shotSpeed}m/s`
         shotDistanceElement.innerHTML = `${shotDistance}m`
     } else {
+        isGoalboardActive = false
         goalboardElement.classList.remove("animate__fadeInUpBig")
         goalboardElement.classList.add("animate__fadeOutDownBig")
     }
