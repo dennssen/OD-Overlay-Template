@@ -209,7 +209,6 @@ function setPlayerStats(statsInfo, extraArenaInfo) {
         for (const [stat, value] of Object.entries(statsInfo.away[playerName] ?? emptyStats)) {
             const statElement = document.getElementById(`away${i + 1}-${stat}`)
             statElement.innerHTML = value
-            awayTotals[stat] += value
         }
     }
 
