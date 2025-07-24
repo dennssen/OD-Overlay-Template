@@ -1,3 +1,4 @@
+let forceFullOverlay = false;
 let lastBestOf = 0;
 
 let lastApiUpdate = { time: 0, timestamp: 0, isRunning: false };
@@ -126,7 +127,11 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
     currentRound.innerHTML = `Round ${Math.min(homeRoundsWon + awayRoundsWon + 1, extraArenaInfo.bestOf)}`
     updateTimer(gamemode.timeSeconds, extraArenaInfo.matchLengthSeconds, extraArenaInfo.isOvertime)
 
-    const actionTimerSeconds = Math.ceil(gamemode.secondaryTimeSeconds)
+    let actionTimerSeconds = Math.ceil(gamemode.secondaryTimeSeconds)
+
+    if (forceFullOverlay) {
+        actionTimerSeconds = 15
+    }
 
     if (actionTimerSeconds === 0 && actionTimer.innerHTML != 0) {
         actionTimer.parentElement.classList.remove("animate__fadeInDown")
