@@ -6,71 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help</title>
 
-    <link rel="stylesheet" href="Help.css">
+    <link rel="stylesheet" href="../Global_CSS/list.css">
 </head>
 
 <body>
     <div class="container">
         <h1 id="title">Help</h1>
-        <p id="info">This page contains a list of questions and answers that will help you understand how these overlays
-            work and how to use them.</p>
+        <p id="info">Pick what you need help with.</p>
         <div class="seperator"></div>
-        <div class="questions-container">
-            <h1>How does it all work?</h1>
-            <p class="description">The overlays are created using completely basic html, css, and javascript. They then
-                fetch data from both Orion Drifts API and the overlayInfo config file. Using this data the overlay gets
-                filled with relevant info about the match the caster camera is currently watching.</p>
+        <div class="list-container">
+            <h1><a href="Setup/setup.html">/Setup</a></h1>
+            <p class="description">Help and info regarding how to setup and use overlays.</p>
 
             <div class="seperator"></div>
 
-            <h1>What is the overlayInfo script for?</h1>
-            <p class="description"> The luau script named "dennssen.overlayInfo.luau" is crucial to make overlays work.
-                The overlayInfo script is in direct contact with the caster camera script.
-                This lets the overlayInfo script communicate with the overlay by saving values to its config file about
-                what the caster camera is doing such as, what arena it has selected, who is playing in the arena, is the
-                caster camera following someone, data about the last goal, players stats gathered throughout the game,
-                etc.</p>
+            <h1><a href="Troubleshooting/troubleshooting.html">/Troubleshooting</a></h1>
+            <p class="description">Help and info regarding how to troubleshoot overlays.</p>
 
             <div class="seperator"></div>
 
-            <h1>How do I set up the overlays?</h1>
-            <p class="description">For the overlays to work you will need to have the Orion Drift Spectator client open,
-                as well as having both the caster camera and overlayInfo script installed. Once you've gotten the
-                spectator client ready add the overlays to OBS using Browser sources and add your local overlay html
-                file. If you are having trouble with the overlays not updating make sure that you have turned on "Send
-                info to overlay" under the "Overlay" dropdown in the caster camera settings.</p>
-
-            <div class="seperator"></div>
-
-            <h1>How do I set team name and logos</h1>
-            <p class="description">To set a team name go to the caster camera settings and navigate down to the
-                "Overlay" dropdown. Once opened there should be a "Home Team Name" and an "Away Team Name" text input
-                field. Put in the names of the respective teams and press the "Send info to Overlay" button. This will
-                send the team names to the overlay for it to display.<br><br> For team logos it depends on which overlay
-                you are using, but for the template overlay you will need to have the logo downloaded locally and placed
-                in the scoreboards "Assets/Images" folder. Then the image will have to follow these rules for it to be
-                loaded by the overlay.
-            </p>
-            <ul>
-                <li>The image has to be a .png</li>
-                <li>The image has to be named after the teams name</li>
-                <li>The image name has to be all lowercase</li>
-                <li>The image name has to use underscores (_) instead of spaces</li>
-                <li>Example Team Name: It's My Team Name</li>
-                <li>Example Team Image Name: it's_my_team_name.png</li>
-            </ul>
-            <p class="description">If all the rules are followed the teams logo will load in automatically once the
-                teams name is in the overlay.</p>
-
-            <div class="seperator"></div>
-
-            <h1>How can I make my own overlays?</h1>
-            <p class="description">Creating your own overlays is quite simple with some prior knowledge with html and
-                javascript. All the template overlays are completely open-source under the MIT license, this allows you
-                as a developer to use the templates for inspiration or use the templates directly with your own
-                modifications. The templates are made to be learned from, with clear nameing and some comments in the
-                javascript. If you have any questions about how to make your own overlay you can reach out to me through
-                discord (dennssen) or ask your question in the overlay thread in the Orion Drift discord.</p>
+            <h1><a href="Development/development.html">/Development</a></h1>
+            <p class="description">Help and info for other developers wanting to modify/create their own overlays.</p>
         </div>
 
         <div class="footer">Copyright (c) 2025 dennssen</div>

@@ -17,10 +17,18 @@ h1 {
     margin: 0;
 }
 
-h1 a {
+a {
     text-decoration: none;
     font-style: none;
     color: black;
+}
+
+img {
+    display: block;
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    border: 2px solid black;
 }
 
 #title {
@@ -49,14 +57,21 @@ h1 a {
 .description {
     font-size: 1.2em;
     margin: 0;
+    margin-bottom: 1%;
 }
 
-li {
-    font-size: 1.2em;
-    margin: 0;
+.image-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
 
-.questions-container .seperator {
+.image-list div {
+    width: 50%;
+}
+
+.list-container .seperator {
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 2.5vh 0;
 }
