@@ -1,3 +1,4 @@
+let isOvertime = false;
 let forceFullOverlay = false;
 let lastBestOf = 0;
 
@@ -125,7 +126,8 @@ function setScoreboardInfo(gamemode, extraArenaInfo) {
     setRoundsWon(extraArenaInfo)
 
     currentRound.innerHTML = `Round ${Math.min(homeRoundsWon + awayRoundsWon + 1, extraArenaInfo.bestOf)}`
-    updateTimer(gamemode.timeSeconds, extraArenaInfo.matchLengthSeconds, extraArenaInfo.isOvertime)
+    isOvertime = extraArenaInfo.isOvertime
+    updateTimer(gamemode.timeSeconds, extraArenaInfo.matchLengthSeconds)
 
     let actionTimerSeconds = Math.ceil(gamemode.secondaryTimeSeconds)
 
@@ -229,7 +231,7 @@ function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
     }
 }
 
-function updateDisplay(isOvertime) {
+function updateDisplay() {
     const showMs = lastApiUpdate.isRunning;
 
     const now = Date.now();
@@ -237,6 +239,7 @@ function updateDisplay(isOvertime) {
     let currentTime = 0;
 
     if (showMs) {
+        console.log(isOvertime)
         if (isOvertime) {
             currentTime = Math.max(0, lastApiUpdate.time + elapsed);
         } else {
@@ -255,7 +258,7 @@ function updateDisplay(isOvertime) {
     }
 }
 
-function updateTimer(newTimeSeconds, matchLengthSeconds, isOvertime) {
+function updateTimer(newTimeSeconds, matchLengthSeconds) {
     if (animationId) cancelAnimationFrame(animationId);
 
     const isRunning = newTimeSeconds !== matchLengthSeconds;
@@ -266,7 +269,7 @@ function updateTimer(newTimeSeconds, matchLengthSeconds, isOvertime) {
         isRunning: isRunning
     };
 
-    updateDisplay(isOvertime);
+    updateDisplay();
 }
 
 function convertSecondsToTime(totalSeconds, showMilliseconds = true) {
