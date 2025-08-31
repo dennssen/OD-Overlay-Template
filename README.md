@@ -6,7 +6,7 @@ To install the webpage for personal you'll first need to make sure that your Cas
 
 Afterwards download the latest `Overlay.zip` file and the `dennssen.overlayInfo.luau` from the releases page. Once the they are downloaded extract the `.zip` files anywhere on your computer and place the `dennssen.overlayInfo.luau` file in the same folder as your Caster Camera script, which should be `Documents/Another-Axiom/A2/Cameras/Behaviours`. 
 
-Alternativly you can download a copy of the source code and extract the `Webpage` directory.
+Alternativly you can download a copy of the source code and extract the `Webpage` directory and the luau file from the source code.
 
 Now the templates are installed and available for use locally.
 
