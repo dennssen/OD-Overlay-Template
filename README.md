@@ -2,7 +2,9 @@
 **OverlayWebsite** is a local website that contains template overlays to be used in casting for Orion Drift as well as API and troubleshooting help.
 
 ## Installation
-To install the webpage for personal use download the latest `Overlay.zip` file from the releases page. Once the `.zip` file is downloaded extract the files anywhere on your computer. 
+To install the webpage for personal you'll first need to make sure that your Caster Camera script is of version 2.0.0 or above. 
+
+Afterwards download the latest `Overlay.zip` file and the `dennssen.overlayInfo.luau` from the releases page. Once the they are downloaded extract the `.zip` files anywhere on your computer and place the `dennssen.overlayInfo.luau` file in the same folder as your Caster Camera script, which should be `Documents/Another-Axiom/A2/Cameras/Behaviours`. 
 
 Alternativly you can download a copy of the source code and extract the `Webpage` directory.
 
