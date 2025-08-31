@@ -17,4 +17,4 @@ For actually displaying the overlays in a recording or a live stream I recommend
 If you have any questions or need any help with setting up or creating your own overlays then you can reach out to dennssen on discord or ask your question in the overlay forum in the spectator forums.
 
 ## Notice
-This repository uses spectator features that are still in early access and under active development, and are subject to change throughout the closed early access.
+This repository uses spectator features that are still in early access and under active development, and are subject to change throughout closed early access.
