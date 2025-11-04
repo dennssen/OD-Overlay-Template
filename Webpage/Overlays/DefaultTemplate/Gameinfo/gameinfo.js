@@ -107,7 +107,50 @@ function setTeamColors(gamemode) {
     root.style.setProperty("--awayColor", `rgba(${awayColor.r}, ${awayColor.g}, ${awayColor.b}, ${awayColor.a})`)
 }
 
-function setTeamPlayers(extraArenaInfo) {
+async function getPlayerByName(playerName) {
+    try {
+        const frameResponse = await fetch("http://localhost:5420/state");
+
+        if (!frameResponse.ok) {
+            return null;
+        }
+
+        const frameData = await frameResponse.json();
+        const players = frameData.players;
+
+        let returnPlayer = null;
+
+        for (const player of players) {
+            if (player.playerName == playerName) {
+                returnPlayer = player;
+                break;
+            }
+        }
+
+        return returnPlayer;
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    return null;
+}
+
+async function getPlayerNumber(playerName) {
+    let playerNumber = 0;
+    const player = await getPlayerByName(playerName);
+
+    if (player == null) {
+        return playerNumber;
+    }
+
+    const logoAtlasUVOffsets = player.cosmeticMaterialMetadata.logoAtlasUVOffsets;
+    playerNumber = logoAtlasUVOffsets.x + logoAtlasUVOffsets.y * 10;
+
+    return playerNumber;
+}
+
+async function setTeamPlayers(extraArenaInfo) {
     const homePlayerNames = extraArenaInfo.home.players
     const awayPlayerNames = extraArenaInfo.away.players
 
@@ -117,6 +160,7 @@ function setTeamPlayers(extraArenaInfo) {
 
         for (let i = 0; i < homePlayerNames.length; i++) {
             const homePlayerName = homePlayerNames[i];
+            const homePlayerNumber = await getPlayerNumber(homePlayerName);
             const playerNameHTML = `<div class="player-name animate__animated animate__fadeInLeft">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                             <path class="player-name-home-color" fill="#070707" stroke-width="2"
@@ -127,7 +171,7 @@ function setTeamPlayers(extraArenaInfo) {
             homePlayerContainer.innerHTML += playerNameHTML
 
             const nameTextElement = document.getElementById(`name-${homePlayerName}`)
-            updateSVGText(nameTextElement, homePlayerName)
+            updateSVGText(nameTextElement, `${homePlayerName} ${homePlayerNumber}`)
         }
     }
 
@@ -137,6 +181,7 @@ function setTeamPlayers(extraArenaInfo) {
 
         for (let i = 0; i < awayPlayerNames.length; i++) {
             const awayPlayerName = awayPlayerNames[i];
+            const awayPlayerNumber = await getPlayerNumber(awayPlayerName);
             const playerNameHTML = `<div class="player-name animate__animated animate__fadeInRight">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 164 49">
                         <path class="player-name-away-color" fill="#070707" stroke-width="2"
@@ -147,7 +192,7 @@ function setTeamPlayers(extraArenaInfo) {
             awayPlayerContainer.innerHTML += playerNameHTML
 
             const nameTextElement = document.getElementById(`name-${awayPlayerName}`)
-            updateSVGText(nameTextElement, awayPlayerName)
+            updateSVGText(nameTextElement, `${awayPlayerName} ${awayPlayerNumber}`)
         }
     }
 
