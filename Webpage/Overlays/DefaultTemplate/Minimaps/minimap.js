@@ -38,3 +38,46 @@ function setTeamColors(gamemode) {
     root.style.setProperty("--homeColor", `rgba(${homeColor.r}, ${homeColor.g}, ${homeColor.b}, ${homeColor.a})`)
     root.style.setProperty("--awayColor", `rgba(${awayColor.r}, ${awayColor.g}, ${awayColor.b}, ${awayColor.a})`)
 }
+
+function getPlayerNumber(playerName) {
+    let playerNumber = 0;
+    const player = getPlayerByName(playerName);
+
+    if (player == null) {
+        return playerNumber;
+    }
+
+    const logoAtlasUVOffsets = player.cosmeticMaterialMetadata.logoAtlasUVOffsets;
+    playerNumber = logoAtlasUVOffsets.x + logoAtlasUVOffsets.y * 10;
+
+    return playerNumber;
+}
+
+async function getPlayerByName(playerName) {
+    try {
+        const frameResponse = await fetch("http://localhost:5420/state");
+
+        if (!frameResponse.ok) {
+            return null;
+        }
+
+        const frameData = frameResponse.json();
+        const players = frameData.players;
+
+        let returnPlayer = null;
+
+        for (const player of players) {
+            if (player.playerName == playerName) {
+                returnPlayer = player;
+                break;
+            }
+        }
+
+        return returnPlayer;
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    return null;
+}
