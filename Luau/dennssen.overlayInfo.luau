@@ -6,6 +6,12 @@ metadata = {
 	defaultKeybind = "",
 }
 
+-- Features:
+-- Possibly make a more universal config structure
+-- Create a player speed template
+-- Add player speeds to overlay template
+-- Create minimap template
+
 local saveInterval = 0.5 -- 1 is good middle ground between safe and efficiency
 local saveTime = 0
 local currentConfig
