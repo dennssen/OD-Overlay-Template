@@ -24,6 +24,12 @@ local configStructure = {
 	},
 	gamemodeSlotId = "",
 	extraArenaInfo = {
+		type = "",
+		arenaSize = {
+			width = 0,
+			height = 0,
+			length = 0,
+		},
 		home = {
 			name = "",
 			players = {},
@@ -122,6 +128,8 @@ function onMessageReceived(messageTable: { info: string, value: any })
 
 	if info == "version" then
 		value(_version)
+	elseif info == "type" then
+		currentConfig.extraArenaInfo.type = value
 	elseif info == "slotId" then
 		currentConfig.gamemodeSlotId = value
 	elseif info == "players" then
@@ -170,5 +178,11 @@ function onMessageReceived(messageTable: { info: string, value: any })
 	elseif info == "teamNames" then
 		currentConfig.extraArenaInfo.home.name = value.home
 		currentConfig.extraArenaInfo.away.name = value.away
+	elseif info == "arenaSize" then
+		currentConfig.extraArenaInfo.arenaSize = {
+			height = value.height,
+			length = value.length,
+			width = value.width,
+		}
 	end
 end
