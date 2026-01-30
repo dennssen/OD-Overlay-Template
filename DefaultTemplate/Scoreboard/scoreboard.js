@@ -55,13 +55,15 @@ ws.onmessage = (e) => {
         gamemode = data.selectedGamemode;
     }
 
+    setScoreboardTeams(data.casterTeams);
+
     if (cameraApi == null || gamemode == null) {
         return;
     }
 
     setBestOfSVG(cameraApi);
     setTeamColors(gamemode);
-    setScoreboardInfo(gamemode, cameraApi, data.casterTeams);
+    setScoreboardInfo(gamemode, cameraApi);
 }
 
 function setTeamColors(gamemode) {
@@ -117,13 +119,7 @@ function setBestOfSVG(cameraApi) {
     lastBestOf = cameraApi.bestOf
 }
 
-function setScoreboardInfo(gamemode, cameraApi, casterTeams) {
-    const homePoints = document.getElementById("home-points")
-    const awayPoints = document.getElementById("away-points")
-
-    const currentRound = document.getElementById("current-round")
-    const actionTimer = document.getElementById("action-timer")
-
+function setScoreboardTeams(casterTeams) {
     const homeTeamName = document.getElementById("home-team-name")
     const homeTeamLogo = document.getElementById("home-team-image")
 
@@ -141,6 +137,14 @@ function setScoreboardInfo(gamemode, cameraApi, casterTeams) {
 
     const awayTeamLogoUrl = casterTeams.away.logoUrl
     setImageWithFallback(awayTeamLogo, awayTeamLogoUrl)
+}
+
+function setScoreboardInfo(gamemode, cameraApi) {
+    const homePoints = document.getElementById("home-points")
+    const awayPoints = document.getElementById("away-points")
+
+    const currentRound = document.getElementById("current-round")
+    const actionTimer = document.getElementById("action-timer")
 
     homePoints.innerHTML = gamemode.teams[0].score
     awayPoints.innerHTML = gamemode.teams[1].score
