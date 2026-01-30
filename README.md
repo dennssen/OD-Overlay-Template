@@ -1,22 +1,20 @@
-# OverlayWebsite
-**OverlayWebsite** is a local website that contains template overlays to be used in casting for Orion Drift as well as API and troubleshooting help.
+# OD Overlay Template
+**OD Overlay Template** is a small package of overlays helpful for getting started with casting or for learning how to make your own overlays. The overlays are designed to work with the [OD Caster Bridge](https://github.com/dennssen/OD_Caster_Bridge) and will not work without it.
+
+## prerquisites
+- [OD Caster Bridge](https://github.com/dennssen/OD_Caster_Bridge)
+- [Caster Camera v2.3.0 or above](https://github.com/dennssen/CasterCamera/releases/latest)
+- OBS (optional)
 
 ## Installation
-To install the webpage for personal you'll first need to make sure that your Caster Camera script is of version 2.0.0 or above. 
+To install the template download the latest `Template.zip` file from the releases page. Once the it's downloaded extract the `.zip` file anywhere on your computer.
 
-Afterwards download the latest `Overlay.zip` file and the `dennssen.overlayInfo.luau` from the releases page. Once the they are downloaded extract the `.zip` files anywhere on your computer and place the `dennssen.overlayInfo.luau` file in the same folder as your Caster Camera script, which should be `Documents/Another-Axiom/A2/Cameras/Behaviours`. 
+Alternativly you can download a copy of the source code and extract the `DefaultTemplate` directory from the source code manually.
 
-Alternativly you can download a copy of the source code and extract the `Webpage` directory and the luau file from the source code.
+Now the template is installed and available for use.
 
-Now the templates are installed and available for use locally.
-
-## Get started
-With the templates on your computer you can now start using the overlays. To get a quick look over all the available templates open the `home.html` file in the `Webpage/Home` folder and navigate to Overlays. In the `home.html` page you can also find a Help page that answers questions related to the templates, as well as an API page.
-
-For actually displaying the overlays in a recording or a live stream I recommend using Browser sources in OBS and ticking the `Local File` checkbox. More info is available in the Help page mentioned above.
+## How do i setup the overlay?
+Wondering how to setup the overlay for use in your stream. Check out the [OD Caster Bridge](https://github.com/dennssen/OD_Caster_Bridge) readme for a detailed explanation on how overlays are setup.
 
 ## Help & Questions
 If you have any questions or need any help with setting up or creating your own overlays then you can reach out to dennssen on discord or ask your question in the overlay forum in the spectator forums.
-
-## Notice
-This repository uses spectator features that are still in early access and under active development, and are subject to change throughout closed early access.
