@@ -2,59 +2,81 @@ let forceFullOverlay = true;
 const imageTypes = ["png", "jpg"]
 
 let lastGracePeriod = false;
-let gracerPeriodStartTime = 0;
-let goalboardMaxLength = 7;
+let gracePeriodStartTime = 0;
+let goalboardMaxDuration = 7;
 let isGoalboardActive = false;
 let lastHomePlayerNames = [];
 let lastAwayPlayerNames = [];
 
-const compareArrays = (a, b) =>
-    a.length === b.length &&
-    a.every((element, index) => element === b[index]);
-
-// This is the main loop
-async function updateOverlay() {
-    const camera_id = "dennssen.overlayInfo";
-
-    try {
-        const cameraConfigResponse = await fetch(`http://localhost:5420/cameras/${camera_id}/config`);
-
-        if (!cameraConfigResponse.ok) {
-            return
-        }
-
-        const cameraConfig = await cameraConfigResponse.json();
-
-        const statsInfo = cameraConfig.statsInfo;
-        const extraArenaInfo = cameraConfig.extraArenaInfo;
-        const slot_id = cameraConfig.gamemodeSlotId;
-
-        const gamemodeResponse = await fetch(`http://localhost:5420/state/gamemodes/${slot_id}`)
-
-        if (!gamemodeResponse.ok) {
-            return
-        }
-
-        const gamemode = await gamemodeResponse.json()
-
-        setTeamColors(gamemode)
-        if (!lastGracePeriod && extraArenaInfo.isGracePeriod) {
-            setGoalboard(extraArenaInfo, gamemode, true)
-        } else if (lastGracePeriod && (!extraArenaInfo.isGracePeriod || gamemode.timeSeconds < gracerPeriodStartTime - goalboardMaxLength)) {
-            setGoalboard(extraArenaInfo, gamemode, false)
-        }
-        setTeamPlayers(extraArenaInfo)
-        setFollowedPlayer(extraArenaInfo, statsInfo)
-        lastGracePeriod = extraArenaInfo.isGracePeriod
-    } catch (error) {
-        console.log(error)
-    }
+const compareArrays = (a, b) => {
+    return a.length === b.length && a.every((element, index) => element === b[index]);
 }
 
-setInterval(updateOverlay, 250)
+const ws = new WebSocket("ws://localhost:8080");
+
+let currentGamemodeId = "";
+
+const camera_id = "dennssen.caster";
+let currentCameraId = "";
+
+function setSelectedGamemode(gamemodeId) {
+    if (gamemodeId !== currentGamemodeId) {
+        ws.send(JSON.stringify({
+            action: "setSubscribedGamemode",
+            slotId: gamemodeId
+        }));
+    }
+
+    currentGamemodeId = gamemodeId;
+}
+
+function setSelectedConfig(cameraId) {
+    if (cameraId !== currentCameraId) {
+        ws.send(JSON.stringify({
+            action: "setSubscribedCameraConfig",
+            cameraId: cameraId
+        }));
+    }
+
+    currentCameraId = cameraId;
+}
+
+ws.onopen = () => console.log("Connected!");
+// This is our main loop
+ws.onmessage = (e) => {
+    setSelectedConfig(camera_id);
+
+    const data = JSON.parse(e.data);
+
+    let cameraApi = null;
+    let gamemode = null;
+
+    if (data.cameraApi !== null) {
+        cameraApi = data.cameraApi;
+        setSelectedGamemode(data.cameraApi.gamemodeId);
+    }
+
+    if (data.selectedGamemode !== null) {
+        gamemode = data.selectedGamemode;
+    }
+
+    if (cameraApi == null || gamemode == null) {
+        return;
+    }
+
+    setTeamColors(gamemode);
+    if (!lastGracePeriod && cameraApi.isGracePeriod) {
+        setGoalboard(cameraApi, gamemode, true)
+    } else if (lastGracePeriod && (!cameraApi.isGracePeriod || gamemode.timeSeconds < gracePeriodStartTime - goalboardMaxDuration)) {
+        setGoalboard(cameraApi, gamemode, false)
+    }
+    setTeamPlayers(cameraApi);
+    setFollowedPlayer(cameraApi);
+    lastGracePeriod = cameraApi.isGracePeriod
+}
 
 // By "Goalboard" I mean the little box containing info about the current goal.
-function setGoalboard(extraArenaInfo, gamemode, activate) {
+function setGoalboard(cameraApi, gamemode, activate) {
     if (isGoalboardActive === activate) {
         return;
     }
@@ -62,9 +84,11 @@ function setGoalboard(extraArenaInfo, gamemode, activate) {
     const goalboardElement = document.getElementById("goalboard")
     if (activate) {
         isGoalboardActive = true
-        gracerPeriodStartTime = gamemode.timeSeconds
+        gracePeriodStartTime = gamemode.timeSeconds
         const colorElement = document.getElementById("goalboard-color")
-        colorElement.setAttribute("stop-color", `var(--${extraArenaInfo.lastShotInfo.team}Color)`)
+        const teamName = getTeamNameByIndex(cameraApi.lastShotInfo.team);
+
+        colorElement.setAttribute("stop-color", `var(--${teamName}Color)`)
         goalboardElement.classList.remove("animate__fadeOutDownBig")
         goalboardElement.classList.add("animate__fadeInUpBig")
 
@@ -73,13 +97,13 @@ function setGoalboard(extraArenaInfo, gamemode, activate) {
         const shotSpeedElement = document.getElementById("goalboard-shot-speed")
         const shotDistanceElement = document.getElementById("goalboard-shot-distance")
 
-        let shooter = extraArenaInfo.lastShotInfo.shooter
+        let shooter = cameraApi.lastShotInfo.shooter
         if (shooter === "") {
             shooter = "Unknown"
         }
-        const assister = extraArenaInfo.lastShotInfo.assister
-        const shotSpeed = Math.floor(extraArenaInfo.lastShotInfo.shotSpeed * 10) / 10
-        const shotDistance = Math.floor(extraArenaInfo.lastShotInfo.shotDistanceMeters * 10) / 10
+        const assister = cameraApi.lastShotInfo.assister
+        const shotSpeed = Math.floor(cameraApi.lastShotInfo.shotSpeed * 10) / 10
+        const shotDistance = Math.floor(cameraApi.lastShotInfo.shotDistanceMeters * 10) / 10
 
         updateSVGText(shooterElement, shooter)
         if (assister !== "") {
@@ -107,9 +131,9 @@ function setTeamColors(gamemode) {
     root.style.setProperty("--awayColor", `rgba(${awayColor.r}, ${awayColor.g}, ${awayColor.b}, ${awayColor.a})`)
 }
 
-function setTeamPlayers(extraArenaInfo) {
-    const homePlayerNames = extraArenaInfo.home.players
-    const awayPlayerNames = extraArenaInfo.away.players
+function setTeamPlayers(cameraApi) {
+    const homePlayerNames = Object.keys(cameraApi.home.players);
+    const awayPlayerNames = Object.keys(cameraApi.away.players);
 
     if (!compareArrays(homePlayerNames, lastHomePlayerNames)) {
         const homePlayerContainer = document.getElementById("home-players")
@@ -156,8 +180,8 @@ function setTeamPlayers(extraArenaInfo) {
 }
 
 // Check if a player is followed, if so, show info about the player in their respective corner
-function setFollowedPlayer(extraArenaInfo, statsInfo) {
-    const followedPlayerName = extraArenaInfo.followedPlayer
+function setFollowedPlayer(cameraApi) {
+    const followedPlayerName = cameraApi.followedPlayer
 
     if (followedPlayerName === "") {
         const awayStatsNameElement = document.getElementById("away-stats-name")
@@ -179,7 +203,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
         return;
     }
 
-    const isHomePlayer = typeof (extraArenaInfo.home.players.find((element) => element == followedPlayerName)) !== "undefined"
+    const isHomePlayer = typeof (cameraApi.home.players[followedPlayerName]) !== "undefined"
 
     if (isHomePlayer) {
         const awayStatsNameElement = document.getElementById("away-stats-name")
@@ -202,7 +226,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
         const assistsStats = document.getElementById("home-stats-assists")
         const savesStats = document.getElementById("home-stats-saves")
 
-        let playerStats = statsInfo.home[followedPlayerName]
+        let playerStats = cameraApi.home.players[followedPlayerName]
 
         if (typeof (playerStats) === "undefined") {
             playerStats = {
@@ -237,7 +261,7 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
         const assistsStats = document.getElementById("away-stats-assists")
         const savesStats = document.getElementById("away-stats-saves")
 
-        let playerStats = statsInfo.away[followedPlayerName]
+        let playerStats = cameraApi.away.players[followedPlayerName]
 
         if (typeof (playerStats) === "undefined") {
             playerStats = {
@@ -253,9 +277,19 @@ function setFollowedPlayer(extraArenaInfo, statsInfo) {
     }
 }
 
+function getTeamNameByIndex(teamIndex) {
+    if (teamIndex == 0) {
+        return "home";
+    } else if (teamIndex == 1) {
+        return "away";
+    } else {
+        return "";
+    }
+}
+
 // Used to resize the font size of text content to fit it's container.
-function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
-    if (newContent !== "") {
+function fitTextInSVG(text, maxWidth, maxFontSize, newContent = null) {
+    if (newContent !== null) {
         text.innerHTML = newContent;
     }
 

@@ -1,34 +1,58 @@
-// this is our main loop
-async function setStats() {
-    const camera_id = "dennssen.overlayInfo";
+const ws = new WebSocket("ws://localhost:8080");
 
-    try {
-        const cameraConfigResponse = await fetch(`http://localhost:5420/cameras/${camera_id}/config`);
+let currentGamemodeId = "";
 
-        if (!cameraConfigResponse.ok) {
-            return
-        }
+const camera_id = "dennssen.caster";
+let currentCameraId = "";
 
-        const cameraConfig = await cameraConfigResponse.json();
-
-        const statsInfo = cameraConfig.statsInfo;
-        const extraArenaInfo = cameraConfig.extraArenaInfo;
-        const slot_id = cameraConfig.gamemodeSlotId;
-
-        const gamemodeResponse = await fetch(`http://localhost:5420/state/gamemodes/${slot_id}`)
-
-        if (!gamemodeResponse.ok) {
-            return
-        }
-
-        const gamemode = await gamemodeResponse.json()
-
-        setTeamColors(gamemode)
-        setRoundsSVG(extraArenaInfo)
-        setPlayerStats(statsInfo, extraArenaInfo)
-    } catch (e) {
-        console.log(e)
+function setSelectedGamemode(gamemodeId) {
+    if (gamemodeId !== currentGamemodeId) {
+        ws.send(JSON.stringify({
+            action: "setSubscribedGamemode",
+            slotId: gamemodeId
+        }));
     }
+
+    currentGamemodeId = gamemodeId;
+}
+
+function setSelectedConfig(cameraId) {
+    if (cameraId !== currentCameraId) {
+        ws.send(JSON.stringify({
+            action: "setSubscribedCameraConfig",
+            cameraId: cameraId
+        }));
+    }
+
+    currentCameraId = cameraId;
+}
+
+ws.onopen = () => console.log("Connected!");
+// This is our main loop
+ws.onmessage = (e) => {
+    setSelectedConfig(camera_id);
+
+    const data = JSON.parse(e.data);
+
+    let cameraApi = null;
+    let gamemode = null;
+
+    if (data.cameraApi !== null) {
+        cameraApi = data.cameraApi;
+        setSelectedGamemode(data.cameraApi.gamemodeId);
+    }
+
+    if (data.selectedGamemode !== null) {
+        gamemode = data.selectedGamemode;
+    }
+
+    if (cameraApi == null || gamemode == null) {
+        return;
+    }
+
+    setTeamColors(gamemode);
+    setRoundsSVG(cameraApi);
+    setPlayerStats(cameraApi);
 }
 
 function setTeamColors(gamemode) {
@@ -41,14 +65,13 @@ function setTeamColors(gamemode) {
     root.style.setProperty("--awayColor", `rgba(${awayColor.r}, ${awayColor.g}, ${awayColor.b}, ${awayColor.a})`)
 }
 
-function setRoundsSVG(extraArenaInfo) {
+function setRoundsSVG(cameraApi) {
     const roundContainerElement = document.getElementsByClassName("round-stats")[0]
-    const rounds = extraArenaInfo.rounds
+    const rounds = cameraApi.rounds
 
     // Here we set the correct svg. Because I'm unfamiliar with SVGs i opted for making pre-existing SVGs and picking the correct one.
     // But there is porbably a better way to do this if you're able to make your own SVGs in code.
-    if (extraArenaInfo.bestOf === 3) {
-        console.log("here")
+    if (cameraApi.bestOf === 3) {
         roundContainerElement.innerHTML = `<svg id="roundboard" viewBox="0 0 304 254" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="home-color" d="M182.4 0H60.8V69.5H182.4V0Z" />
                 <path class="home-color" d="M182.4 69.5H60.8V130.7H182.4V69.5Z" />
@@ -80,14 +103,14 @@ function setRoundsSVG(extraArenaInfo) {
                 <path
                     d="M7.89538 237.5V208.409H17.7249C19.9977 208.409 21.8632 208.797 23.3215 209.574C24.7798 210.341 25.8594 211.397 26.5602 212.741C27.2609 214.086 27.6113 215.616 27.6113 217.33C27.6113 219.044 27.2609 220.563 26.5602 221.889C25.8594 223.215 24.7846 224.257 23.3357 225.014C21.8869 225.762 20.0355 226.136 17.7817 226.136H9.8272V222.955H17.6681C19.2211 222.955 20.4711 222.727 21.4181 222.273C22.3745 221.818 23.0658 221.174 23.492 220.341C23.9276 219.498 24.1454 218.494 24.1454 217.33C24.1454 216.165 23.9276 215.147 23.492 214.276C23.0564 213.404 22.3603 212.732 21.4039 212.259C20.4475 211.776 19.1833 211.534 17.6113 211.534H11.4181V237.5H7.89538ZM21.5886 224.432L28.7477 237.5H24.6567L17.6113 224.432H21.5886ZM42.7995 237.898C40.9245 237.898 39.2531 237.576 37.7853 236.932C36.327 236.288 35.1669 235.393 34.3052 234.247C33.4529 233.092 32.9889 231.752 32.9131 230.227H36.4927C36.5684 231.165 36.8904 231.974 37.4586 232.656C38.0268 233.329 38.7701 233.849 39.6887 234.219C40.6073 234.588 41.6253 234.773 42.7427 234.773C43.9927 234.773 45.1006 234.555 46.0665 234.119C47.0325 233.684 47.79 233.078 48.3393 232.301C48.8885 231.525 49.1631 230.625 49.1631 229.602C49.1631 228.532 48.898 227.59 48.3677 226.776C47.8374 225.952 47.0609 225.308 46.0381 224.844C45.0154 224.38 43.7654 224.148 42.2881 224.148H39.9586V221.023H42.2881C43.4434 221.023 44.4567 220.814 45.3279 220.398C46.2086 219.981 46.8951 219.394 47.3876 218.636C47.8895 217.879 48.1404 216.989 48.1404 215.966C48.1404 214.981 47.9226 214.124 47.487 213.395C47.0514 212.666 46.4359 212.098 45.6404 211.69C44.8544 211.283 43.9264 211.08 42.8563 211.08C41.8525 211.08 40.9056 211.264 40.0154 211.634C39.1347 211.993 38.415 212.519 37.8563 213.21C37.2976 213.892 36.9946 214.716 36.9472 215.682H33.5381C33.595 214.157 34.0542 212.822 34.916 211.676C35.7777 210.521 36.9046 209.621 38.2967 208.977C39.6982 208.333 41.237 208.011 42.9131 208.011C44.7124 208.011 46.2559 208.376 47.5438 209.105C48.8317 209.825 49.8213 210.777 50.5126 211.96C51.2039 213.144 51.5495 214.422 51.5495 215.795C51.5495 217.434 51.1186 218.83 50.2569 219.986C49.4046 221.141 48.2446 221.941 46.7768 222.386V222.614C48.6139 222.917 50.0486 223.698 51.0807 224.957C52.1129 226.207 52.629 227.756 52.629 229.602C52.629 231.184 52.1982 232.604 51.3364 233.864C50.4842 235.114 49.3194 236.098 47.8421 236.818C46.3648 237.538 44.684 237.898 42.7995 237.898Z"
                     fill="black" />
-                <text id="R1-home" x="40%" y="41%" font-size="45">${rounds[0]?.home.score ?? ""}</text>
-                <text id="R1-away" x="80%" y="41%" font-size="45">${rounds[0]?.away.score ?? ""}</text>
-                <text id="R2-home" x="40%" y="65.5%" font-size="45">${rounds[1]?.home.score ?? ""}</text>
-                <text id="R2-away" x="80%" y="65.5%" font-size="45">${rounds[1]?.away.score ?? ""}</text>
-                <text id="R3-home" x="40%" y="90%" font-size="45">${rounds[2]?.home.score ?? ""}</text>
-                <text id="R3-away" x="80%" y="90%" font-size="45">${rounds[2]?.away.score ?? ""}</text>
+                <text id="R1-home" x="40%" y="41%" font-size="45">${rounds[0]?.home ?? ""}</text>
+                <text id="R1-away" x="80%" y="41%" font-size="45">${rounds[0]?.away ?? ""}</text>
+                <text id="R2-home" x="40%" y="65.5%" font-size="45">${rounds[1]?.home ?? ""}</text>
+                <text id="R2-away" x="80%" y="65.5%" font-size="45">${rounds[1]?.away ?? ""}</text>
+                <text id="R3-home" x="40%" y="90%" font-size="45">${rounds[2]?.home ?? ""}</text>
+                <text id="R3-away" x="80%" y="90%" font-size="45">${rounds[2]?.away ?? ""}</text>
             </svg>`
-    } else if (extraArenaInfo.bestOf === 5) {
+    } else if (cameraApi.bestOf === 5) {
         roundContainerElement.innerHTML = `<svg id="roundboard" viewBox="0 0 304 376" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="home-color" d="M182.4 0H60.8V69.5H182.4V0Z" />
                 <path class="home-color" d="M182.4 69.5H60.8V130.7H182.4V69.5Z" />
@@ -131,18 +154,18 @@ function setRoundsSVG(extraArenaInfo) {
                 <path
                     d="M8.46178 359.9V330.809H18.2913C20.5641 330.809 22.4296 331.197 23.8879 331.974C25.3463 332.741 26.4258 333.797 27.1266 335.142C27.8273 336.486 28.1777 338.016 28.1777 339.73C28.1777 341.444 27.8273 342.963 27.1266 344.289C26.4258 345.615 25.351 346.657 23.9021 347.414C22.4533 348.162 20.6019 348.536 18.3481 348.536H10.3936V345.355H18.2345C19.7875 345.355 21.0375 345.127 21.9845 344.673C22.941 344.218 23.6322 343.574 24.0584 342.741C24.494 341.898 24.7118 340.894 24.7118 339.73C24.7118 338.565 24.494 337.547 24.0584 336.676C23.6228 335.804 22.9267 335.132 21.9703 334.659C21.0139 334.176 19.7497 333.934 18.1777 333.934H11.9845V359.9H8.46178ZM22.155 346.832L29.3141 359.9H25.2231L18.1777 346.832H22.155ZM42.6273 360.298C40.9606 360.298 39.4597 359.966 38.1244 359.303C36.7892 358.641 35.7191 357.731 34.9142 356.576C34.1093 355.421 33.6689 354.105 33.5932 352.627H37.0023C37.1348 353.944 37.7314 355.033 38.792 355.894C39.8621 356.747 41.1405 357.173 42.6273 357.173C43.8204 357.173 44.8811 356.893 45.8091 356.335C46.7466 355.776 47.4805 355.009 48.0108 354.034C48.5506 353.049 48.8204 351.936 48.8204 350.695C48.8204 349.427 48.5411 348.295 47.9824 347.301C47.4331 346.297 46.6756 345.506 45.7097 344.928C44.7437 344.351 43.6405 344.057 42.4 344.048C41.5098 344.038 40.596 344.176 39.6585 344.46C38.721 344.734 37.9492 345.089 37.3432 345.525L34.0477 345.127L35.8091 330.809H50.9227V333.934H38.7636L37.7409 342.514H37.9114C38.5079 342.04 39.2561 341.647 40.1557 341.335C41.0553 341.022 41.9928 340.866 42.9682 340.866C44.7485 340.866 46.3347 341.292 47.7267 342.144C49.1282 342.987 50.2267 344.142 51.0222 345.61C51.8271 347.078 52.2295 348.754 52.2295 350.639C52.2295 352.495 51.8129 354.152 50.9795 355.61C50.1557 357.059 49.0193 358.205 47.5704 359.048C46.1216 359.881 44.4739 360.298 42.6273 360.298Z"
                     fill="black" />
-                <text id="R1-home" x="40%" y="26.8%" font-size="45">${rounds[0]?.home.score ?? ""}</text>
-                <text id="R1-away" x="80%" y="26.8%" font-size="45">${rounds[0]?.away.score ?? ""}</text>
-                <text id="R2-home" x="40%" y="43.19%" font-size="45">${rounds[1]?.home.score ?? ""}</text>
-                <text id="R2-away" x="80%" y="43.19%" font-size="45">${rounds[1]?.away.score ?? ""}</text>
-                <text id="R3-home" x="40%" y="59.57%" font-size="45">${rounds[2]?.home.score ?? ""}</text>
-                <text id="R3-away" x="80%" y="59.57%" font-size="45">${rounds[2]?.away.score ?? ""}</text>
-                <text id="R4-home" x="40%" y="75.96%" font-size="45">${rounds[3]?.home.score ?? ""}</text>
-                <text id="R4-away" x="80%" y="75.96%" font-size="45">${rounds[3]?.away.score ?? ""}</text>
-                <text id="R5-home" x="40%" y="92.34%" font-size="45">${rounds[4]?.home.score ?? ""}</text>
-                <text id="R5-away" x="80%" y="92.34%" font-size="45">${rounds[4]?.away.score ?? ""}</text>
+                <text id="R1-home" x="40%" y="26.8%" font-size="45">${rounds[0]?.home ?? ""}</text>
+                <text id="R1-away" x="80%" y="26.8%" font-size="45">${rounds[0]?.away ?? ""}</text>
+                <text id="R2-home" x="40%" y="43.19%" font-size="45">${rounds[1]?.home ?? ""}</text>
+                <text id="R2-away" x="80%" y="43.19%" font-size="45">${rounds[1]?.away ?? ""}</text>
+                <text id="R3-home" x="40%" y="59.57%" font-size="45">${rounds[2]?.home ?? ""}</text>
+                <text id="R3-away" x="80%" y="59.57%" font-size="45">${rounds[2]?.away ?? ""}</text>
+                <text id="R4-home" x="40%" y="75.96%" font-size="45">${rounds[3]?.home ?? ""}</text>
+                <text id="R4-away" x="80%" y="75.96%" font-size="45">${rounds[3]?.away ?? ""}</text>
+                <text id="R5-home" x="40%" y="92.34%" font-size="45">${rounds[4]?.home ?? ""}</text>
+                <text id="R5-away" x="80%" y="92.34%" font-size="45">${rounds[4]?.away ?? ""}</text>
             </svg>`
-    } else if (extraArenaInfo.bestOf === 7) {
+    } else if (cameraApi.bestOf === 7) {
         roundContainerElement.innerHTML = `<svg id="roundboard" viewBox="0 0 304 498" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M182.4 0H60.8V69.5H182.4V0Z" class="home-color" />
                 <path d="M182.4 69.5H60.8V130.7H182.4V69.5Z" class="home-color" />
@@ -192,31 +215,26 @@ function setRoundsSVG(extraArenaInfo) {
                 <path
                     d="M9.70397 482.3V453.209H19.5335C21.8062 453.209 23.6718 453.597 25.1301 454.374C26.5884 455.141 27.668 456.197 28.3687 457.542C29.0695 458.886 29.4199 460.416 29.4199 462.13C29.4199 463.844 29.0695 465.363 28.3687 466.689C27.668 468.015 26.5932 469.057 25.1443 469.814C23.6954 470.562 21.8441 470.936 19.5903 470.936H11.6358V467.755H19.4767C21.0297 467.755 22.2797 467.527 23.2267 467.073C24.1831 466.618 24.8744 465.974 25.3006 465.141C25.7362 464.298 25.954 463.294 25.954 462.13C25.954 460.965 25.7362 459.947 25.3006 459.076C24.865 458.204 24.1689 457.532 23.2125 457.059C22.2561 456.576 20.9919 456.334 19.4199 456.334H13.2267V482.3H9.70397ZM23.3972 469.232L30.5562 482.3H26.4653L19.4199 469.232H23.3972ZM35.6876 482.3L48.699 456.561V456.334H33.699V453.209H52.3354V456.505L39.3808 482.3H35.6876Z"
                     fill="black" />
-                <text id="R1-home" x="40%" y="20.15%" font-size="45">${rounds[0]?.home.score ?? ""}</text>
-                <text id="R1-away" x="80%" y="20.15%" font-size="45">${rounds[0]?.away.score ?? ""}</text>
-                <text id="R2-home" x="40%" y="32.45%" font-size="45">${rounds[1]?.home.score ?? ""}</text>
-                <text id="R2-away" x="80%" y="32.45%" font-size="45">${rounds[1]?.away.score ?? ""}</text>
-                <text id="R3-home" x="40%" y="44.75%" font-size="45">${rounds[2]?.home.score ?? ""}</text>
-                <text id="R3-away" x="80%" y="44.75%" font-size="45">${rounds[2]?.away.score ?? ""}</text>
-                <text id="R4-home" x="40%" y="57.05%" font-size="45">${rounds[3]?.home.score ?? ""}</text>
-                <text id="R4-away" x="80%" y="57.05%" font-size="45">${rounds[3]?.away.score ?? ""}</text>
-                <text id="R5-home" x="40%" y="69.35%" font-size="45">${rounds[4]?.home.score ?? ""}</text>
-                <text id="R5-away" x="80%" y="69.35%" font-size="45">${rounds[4]?.away.score ?? ""}</text>
-                <text id="R6-home" x="40%" y="81.65%" font-size="45">${rounds[5]?.home.score ?? ""}</text>
-                <text id="R6-away" x="80%" y="81.65%" font-size="45">${rounds[5]?.away.score ?? ""}</text>
-                <text id="R7-home" x="40%" y="93.95%" font-size="45">${rounds[6]?.home.score ?? ""}</text>
-                <text id="R7-away" x="80%" y="93.95%" font-size="45">${rounds[6]?.away.score ?? ""}</text>
+                <text id="R1-home" x="40%" y="20.15%" font-size="45">${rounds[0]?.home ?? ""}</text>
+                <text id="R1-away" x="80%" y="20.15%" font-size="45">${rounds[0]?.away ?? ""}</text>
+                <text id="R2-home" x="40%" y="32.45%" font-size="45">${rounds[1]?.home ?? ""}</text>
+                <text id="R2-away" x="80%" y="32.45%" font-size="45">${rounds[1]?.away ?? ""}</text>
+                <text id="R3-home" x="40%" y="44.75%" font-size="45">${rounds[2]?.home ?? ""}</text>
+                <text id="R3-away" x="80%" y="44.75%" font-size="45">${rounds[2]?.away ?? ""}</text>
+                <text id="R4-home" x="40%" y="57.05%" font-size="45">${rounds[3]?.home ?? ""}</text>
+                <text id="R4-away" x="80%" y="57.05%" font-size="45">${rounds[3]?.away ?? ""}</text>
+                <text id="R5-home" x="40%" y="69.35%" font-size="45">${rounds[4]?.home ?? ""}</text>
+                <text id="R5-away" x="80%" y="69.35%" font-size="45">${rounds[4]?.away ?? ""}</text>
+                <text id="R6-home" x="40%" y="81.65%" font-size="45">${rounds[5]?.home ?? ""}</text>
+                <text id="R6-away" x="80%" y="81.65%" font-size="45">${rounds[5]?.away ?? ""}</text>
+                <text id="R7-home" x="40%" y="93.95%" font-size="45">${rounds[6]?.home ?? ""}</text>
+                <text id="R7-away" x="80%" y="93.95%" font-size="45">${rounds[6]?.away ?? ""}</text>
             </svg>`
     }
 }
 
-function setPlayerStats(statsInfo, extraArenaInfo) {
+function setPlayerStats(cameraApi) {
     const maxPlayerAmount = 4;
-    const emptyStats = {
-        goals: 0,
-        assists: 0,
-        saves: 0
-    }
 
     let homeTotals = {
         goals: 0,
@@ -224,31 +242,33 @@ function setPlayerStats(statsInfo, extraArenaInfo) {
         saves: 0
     }
 
-    for (let i = 0; i < extraArenaInfo.home.players.length; i++) {
-        const playerName = extraArenaInfo.home.players[i];
-        const playerNameElement = document.getElementById(`home${i + 1}-name`)
+    let homeIndex = 0;
+    for (const [name, stats] of Object.entries(cameraApi.home.players)) {
+        const playerNameElement = document.getElementById(`home${homeIndex + 1}-name`)
 
         if (playerNameElement === null) {
             continue;
         }
 
-        updateSVGText(playerNameElement, playerName)
+        updateSVGText(playerNameElement, name)
 
-        for (const [stat, value] of Object.entries(statsInfo.home[playerName] ?? emptyStats)) {
-            const statElement = document.getElementById(`home${i + 1}-${stat}`)
+        for (const [stat, value] of Object.entries(stats)) {
+            homeTotals[stat] += value;
+            const statElement = document.getElementById(`home${homeIndex + 1}-${stat}`)
             statElement.innerHTML = value
         }
+
+        homeIndex++;
     }
 
-    for (let i = 0; i < maxPlayerAmount; i++) {
-        const goals = document.getElementById(`home${i + 1}-goals`)
-        homeTotals.goals += Number(goals.innerHTML)
+    for (homeIndex; homeIndex < maxPlayerAmount; homeIndex++) {
+        const playerNameElement = document.getElementById(`home${homeIndex + 1}-name`);
 
-        const assists = document.getElementById(`home${i + 1}-assists`)
-        homeTotals.assists += Number(assists.innerHTML)
+        updateSVGText(playerNameElement, "");
 
-        const saves = document.getElementById(`home${i + 1}-saves`)
-        homeTotals.saves += Number(saves.innerHTML)
+        document.getElementById(`home${homeIndex + 1}-goals`).innerHTML = "";
+        document.getElementById(`home${homeIndex + 1}-assists`).innerHTML = "";
+        document.getElementById(`home${homeIndex + 1}-saves`).innerHTML = "";
     }
 
     document.getElementById("home-total-goals").innerHTML = homeTotals.goals;
@@ -261,31 +281,33 @@ function setPlayerStats(statsInfo, extraArenaInfo) {
         saves: 0
     }
 
-    for (let i = 0; i < extraArenaInfo.away.players.length; i++) {
-        const playerName = extraArenaInfo.away.players[i];
-        const playerNameElement = document.getElementById(`away${i + 1}-name`)
+    let awayIndex = 0;
+    for (const [name, stats] of Object.entries(cameraApi.away.players)) {
+        const playerNameElement = document.getElementById(`away${awayIndex + 1}-name`)
 
         if (playerNameElement === null) {
             continue;
         }
 
-        updateSVGText(playerNameElement, playerName)
+        updateSVGText(playerNameElement, name)
 
-        for (const [stat, value] of Object.entries(statsInfo.away[playerName] ?? emptyStats)) {
-            const statElement = document.getElementById(`away${i + 1}-${stat}`)
+        for (const [stat, value] of Object.entries(stats)) {
+            awayTotals[stat] += value;
+            const statElement = document.getElementById(`away${awayIndex + 1}-${stat}`)
             statElement.innerHTML = value
         }
+
+        awayIndex++;
     }
 
-    for (let i = 0; i < maxPlayerAmount; i++) {
-        const goals = document.getElementById(`away${i + 1}-goals`)
-        awayTotals.goals += Number(goals.innerHTML)
+    for (awayIndex; awayIndex < maxPlayerAmount; awayIndex++) {
+        const playerNameElement = document.getElementById(`away${awayIndex + 1}-name`);
 
-        const assists = document.getElementById(`away${i + 1}-assists`)
-        awayTotals.assists += Number(assists.innerHTML)
+        updateSVGText(playerNameElement, "");
 
-        const saves = document.getElementById(`away${i + 1}-saves`)
-        awayTotals.saves += Number(saves.innerHTML)
+        document.getElementById(`away${awayIndex + 1}-goals`).innerHTML = "";
+        document.getElementById(`away${awayIndex + 1}-assists`).innerHTML = "";
+        document.getElementById(`away${awayIndex + 1}-saves`).innerHTML = "";
     }
 
     document.getElementById("away-total-goals").innerHTML = awayTotals.goals;
@@ -294,8 +316,8 @@ function setPlayerStats(statsInfo, extraArenaInfo) {
 }
 
 // Used to resize the font size of text content to fit it's container.
-function fitTextInSVG(text, maxWidth, maxFontSize, newContent = "") {
-    if (newContent !== "") {
+function fitTextInSVG(text, maxWidth, maxFontSize, newContent = null) {
+    if (newContent !== null) {
         text.innerHTML = newContent;
     }
 
@@ -335,5 +357,3 @@ function updateAllSVGText() {
 }
 
 updateAllSVGText();
-setStats();
-setInterval(setStats, 5000)
