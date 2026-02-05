@@ -16,9 +16,6 @@ const ws = new WebSocket("ws://localhost:8080");
 
 let currentGamemodeId = "";
 
-const camera_id = "dennssen.caster";
-let currentCameraId = "";
-
 function setSelectedGamemode(gamemodeId) {
     if (gamemodeId !== currentGamemodeId) {
         ws.send(JSON.stringify({
@@ -30,22 +27,9 @@ function setSelectedGamemode(gamemodeId) {
     currentGamemodeId = gamemodeId;
 }
 
-function setSelectedConfig(cameraId) {
-    if (cameraId !== currentCameraId) {
-        ws.send(JSON.stringify({
-            action: "setSubscribedCameraConfig",
-            cameraId: cameraId
-        }));
-    }
-
-    currentCameraId = cameraId;
-}
-
 ws.onopen = () => console.log("Connected!");
 // This is our main loop
 ws.onmessage = (e) => {
-    setSelectedConfig(camera_id);
-
     const data = JSON.parse(e.data);
 
     let cameraApi = null;
